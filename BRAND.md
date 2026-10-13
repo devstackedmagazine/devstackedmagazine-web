@@ -10,8 +10,6 @@ The name suggests a magazine; use that as a visual cue, without implying that pu
 
 ## Name and wordmark
 
-Follow the confirmed naming rule in [Brand identity](brand/identity.md#name-and-wordmark).
-
 Proposed treatment:
 
 - Set the wordmark as live text in the primary sans-serif, weight 700.
