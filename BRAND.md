@@ -1,6 +1,6 @@
 # devstackedmagazine — visual brand guide
 
-Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, clean compact bold typography. User chose this type direction after rejecting Archivo Black. Native WebGL stone gateway replaces the abandoned conversion workflow.
+Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, clean compact bold typography. User chose this type direction after rejecting Archivo Black. Native extruded logo, Lenis smoothing, page transitions and a horizontal project reel. Heading labels and dots removed.
 
 ## Direction
 
@@ -74,7 +74,7 @@ Use real work: website captures, product screens, process details, and original 
 - Build illustrations from simple lines, grids, blocks, and diagrams that explain a specific idea.
 - Use lime for annotations or one focal detail, not a tint over every image.
 - Label conceptual mockups when they could be mistaken for shipped work.
-- Preserve the actual logo artwork. Current scene uses real textured stone slabs, water reflections and a moving camera around a reference-art plane. The logo itself remains raster artwork pending a clear asset; do not invent its geometry.
+- Preserve the distinctive split crown, diagonal cuts and lime inset. Current logo is extruded geometry traced from the reference; replace its contours with final vector artwork when supplied. No rendered podium or surrounding gateway.
 
 ## Icons and interface details
 
