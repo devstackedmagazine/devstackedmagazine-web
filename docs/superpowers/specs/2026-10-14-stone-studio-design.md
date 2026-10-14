@@ -6,7 +6,7 @@ User authorized implementation after the in-chat design discussion. Build in thi
 Present devstackedmagazine as a studio building client websites, landing pages, systems and software; graphic design, social creative and motion graphics; AI integrations and calling agents. Give owned SaaS and client work equal prominence.
 
 ## Experience
-Use the supplied visual reference: dark volcanic terrain, pale stone logo, lime fissures, mist and water. Scrolling approaches the monument, raises slabs, and travels through the logo before revealing two equally weighted paths: client work and own products. Ordinary scrolling, visible navigation, keyboard access, mobile layout, reduced-motion and WebGL fallback are required.
+Use the supplied visual reference: dark volcanic terrain, pale stone logo, lime fissures, mist and water. Scrolling approaches the monument, raises slabs, and travels through the stone gateway before revealing two equally weighted paths: client work and own products. Ordinary scrolling, visible navigation, keyboard access, mobile layout, reduced-motion and WebGL fallback are required.
 
 ## Pages
 Home, client work, products, services, pricing, studio, contact; individual illustrative project previews. No fabricated shipped products, customer names, testimonials or metrics. Clearly label concept work and demo products until real content arrives.
@@ -15,11 +15,11 @@ Home, client work, products, services, pricing, studio, contact; individual illu
 Use scope-based offers, no invented amounts. Distinguish one-off website/system work, ongoing creative work, and AI usage/operating costs. Product pricing belongs to each product. Prepare a downloadable/copyable inquiry brief locally; no fake delivery success or invented email address.
 
 ## Assets and implementation
-Brand: #F5F3EE paper, #171717 ink, #D7FF3F lime; self-host Inter, sparse IBM Plex Mono. Reference symbol is the user's logo; use temporary 3D tracing from reference, replace with final artwork when supplied. Generate a landscape background with no text/logo and save the prompt. Native HTML/CSS/JS with Vite and Three.js, avoiding an unnecessary framework. Keep content separate from scene construction. Dark immersive landing; warm paper detail surfaces framed by dark terrain.
+Brand: #F5F3EE paper, #171717 ink, #D7FF3F lime; self-host Onest. Reference symbol is the user's logo. Preserve it as artwork inside the native 3D gateway pending final clear assets. Generated empty landscape and basalt texture are documented in docs/assets.md. Native HTML/CSS/JS with Vite and Three.js; content separate from scene construction. Dark surfaces throughout.
 
 ## Verification
 Production build; route and brief unit tests; browser checks of desktop, mobile, scroll sequence, navigation, pricing/service selection, contact validation, reduced motion and fallback. Commit meaningful milestones. Missing final logo, portfolio, SaaS names, amounts and contact delivery remain documented launch requirements.
 
 ## Visual review revision
 
-User rejected white interiors, the rough monument and logo approximation, and Inter. User authorized selecting a more suitable font. Revised direction: dark interiors throughout, Archivo Black display headings, Manrope body. Remove improvised logo marks. Use reference-based raster art with restrained parallax as an interim visual; final interactive 3D remains unfinished pending clear logo artwork and faithful textured reconstruction. Do not represent raster parallax as completion of the agreed 3D journey.
+User rejected white interiors, the approximate monument, Inter and Archivo Black. Current typography is clean, compact, bold Onest. User abandoned to3D conversion and requested another effect. Native WebGL gateway supplies rising/rotating stone slabs, lime seams, reflections and a camera passage. Logo remains reference artwork on a plane; do not describe it as extruded geometry.
