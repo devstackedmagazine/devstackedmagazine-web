@@ -1,10 +1,10 @@
 # devstackedmagazine
 
-Local agency website prototype: a cinematic volcanic landscape, a Three.js stone monument, scroll-driven camera approach/terrain awakening/logo passage, and equal client/product destinations.
+Local agency website prototype. Current art direction: dark volcanic terrain, lime light, Archivo Black display typography and Manrope body text. Client services and owned SaaS receive equal prominence.
 
 ## Run
 
-Node 22.12+ (or a supported newer version).
+Node 22.12+.
 
 ```sh
 npm ci
@@ -14,32 +14,38 @@ npm run build
 npm run preview
 ```
 
-Dev preview: http://127.0.0.1:5173. Built files: `dist/`. Production hosting must rewrite non-asset paths to `index.html` for deep links.
+Preview: http://127.0.0.1:5173. Build: `dist/`. Hosting must rewrite non-asset deep links to `index.html`.
 
-## Structure
+## Current visual revision
 
-- `src/main.js`: History API routing, page composition, navigation, filters and inquiry flow.
-- `src/content.js`: project concepts, service groups, scope-based offers, route resolution and brief validation.
-- `src/scene.js`: disposable Three.js scene, procedural stone textures, temporary logo geometry, slabs, water and scroll choreography.
-- `src/style.css`: responsive design, page layouts, interface concepts, reduced-motion treatment.
-- `public/assets/volcanic-valley.png`: generated background plate, stored locally. Generation prompt and provenance in `docs/assets.md`.
+The initial procedural Three.js monument and improvised D marks were rejected. They have been removed. The hero now uses a text-free edit of the supplied reference image with subtle pointer/scroll parallax, atmospheric overlay, and a transition into the page. **This is image-based art direction, not a finished interactive 3D scene.**
 
-Fonts are self-hosted via Fontsource. No analytics or runtime third-party calls are enabled. Three.js is loaded only on the homepage; the scene pauses rendering offscreen and when hidden, caps pixel ratio and rendering frequency, and disposes GPU resources on navigation. The scene's compressed JS chunk is approximately 144 kB; Vite reports a 500 kB uncompressed chunk warning for Three.js.
+The next 3D pass must reconstruct the actual logo from the user's clear artwork and use properly textured terrain, materials, lighting and camera movement. Do not reintroduce a generic D or claim that scaling this image is a physical camera passage.
 
-## Content and launch requirements
+All agency page surfaces are dark; light areas inside illustrative project previews belong to those example interfaces. Archivo Black and Manrope are self-hosted. No Inter or IBM Plex Mono is installed or imported.
 
-- Supply the final clear logo artwork. The monument and small marks are temporary tracings from the supplied reference, not final artwork. Replace `logoShape()`/`diagonalShape()` in `src/scene.js` and the SVG marks in `src/main.js`/`public/favicon.svg` with approved outlines. A vector outline or GLB will preserve the 3D camera passage better than a flat PNG.
-- Replace concept studies with real client projects and verified outcomes. All illustrative work is explicitly labeled; no testimonials, client claims, or business metrics are invented.
-- Replace product concepts with actual SaaS names, screenshots, availability, URLs, and plan links.
-- Finalize scope and actual pricing; current offers explain engagement models without made-up amounts.
-- Provide actual studio details and imagery if desired. Location and team size were not inferred from the reference image.
-- Connect contact delivery to an approved email/form service. Current form validates and prepares a copyable/downloadable brief; it **does not send an inquiry**. Drafts persist in memory across local navigation, not after refresh, and are not stored on a server.
-- Keep the generated landscape as art direction or replace it with final art. The camera travels through real geometry layered over the plate; the distant mountains are image-based rather than a complete 3D environment.
+## Files
+
+- `src/main.js`: page composition, History API routing, navigation, filters and inquiry flow.
+- `src/content.js`: illustrative projects, service groups, engagement offers, route resolution and brief validation.
+- `src/scene.js`: image-based parallax controller and motion settings; no WebGL model.
+- `src/style.css`: responsive layout, typography, dark surfaces, mock interfaces and reduced-motion treatment.
+- `public/assets/stone-monument.png`: text-free reference-based hero edit.
+- `public/assets/volcanic-valley.png`: supporting landscape plate.
+- `docs/assets.md`: asset provenance and prompts.
+
+## Launch requirements
+
+- Final clear logo asset; SVG/vector outline preferred when available. Current navigation uses a text wordmark, with a neutral lime-dot favicon.
+- Faithful 3D monument/terrain reconstruction from approved artwork.
+- Actual client projects and verified outcomes. Concept previews are labeled; no testimonials or client metrics are invented.
+- Actual SaaS names, screenshots, availability, URLs and plan links.
+- Final pricing. Current pricing explains scope and engagement models without invented amounts.
+- Contact delivery. Current form prepares a copyable/downloadable brief; it **does not send an inquiry**. Drafts remain in memory across navigation, not refresh. No server stores the data.
+- Deployment and target-device performance review.
 
 ## Verification
 
-Node tests cover known/unknown deep links and brief validation. Browser QA covered desktop (1440 CSS px) and mobile (390 CSS px plus narrow 325 CSS px), all main page layouts, mobile menu, portfolio filters, navigation/back, scene disposal, terrain awakening and logo passage, input validation, safe plain-text rendering, draft retention and text download. Runtime warning/error logs were empty in the tested browser.
+Node tests cover deep links, unknown routes and brief validation. Production build passes. Browser review of the visual revision checks font loading, dark main page surfaces, 390/325 CSS-pixel layouts and menu behavior. Prior functional QA covered project filters, back navigation, safe plain-text brief rendering, draft retention and .txt download; the corresponding form logic is unchanged.
 
-Reduced-motion preferences and WebGL failure handling are implemented. Manual static-mode switching is browser-tested; OS-level reduced-motion emulation and forced context loss were not available in the browser tooling and were not tested. Target-device GPU/performance testing remains necessary before launch.
-
-The design and compact implementation plan are in `docs/superpowers/`.
+Motion can be reduced through the site control or OS preference. OS-level emulation is unavailable in this browser tooling. No analytics or runtime third-party requests are enabled.
