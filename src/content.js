@@ -1,3 +1,5 @@
+export const routes = ['/', '/work', '/products', '/services', '/pricing', '/studio', '/contact'];
+
 export const projects = [
   { slug: 'form-and-field', name: 'Form & Field', type: 'Website concept', category: 'Websites', className: 'form-field', title: 'A considered home for a design practice.', description: 'An illustrative website direction exploring generous typography, tactile imagery, and a clear path from discovery to inquiry.', scope: ['Visual direction', 'Responsive website', 'Project discovery'], kind: 'website' },
   { slug: 'signal', name: 'Signal', type: 'SaaS interface concept', category: 'Software', className: 'signal', title: 'Make room for the work that matters.', description: 'An illustrative product interface for keeping projects, tasks and team activity in one focused workspace. This is a design demonstration, not an available product.', scope: ['Product design', 'Interface system', 'Workflow prototype'], kind: 'product' },
@@ -17,4 +19,12 @@ export const offers = [
   { id: 'system', name: 'Software & AI', model: 'Scoped engagement', description: 'Built around the way you work.', items: ['Discovery & workflow mapping', 'Product or system design', 'Development & integrations', 'Testing & rollout plan'], note: 'AI usage, third-party subscriptions and ongoing operation quoted separately.' },
   { id: 'creative', name: 'Creative partnership', model: 'Project or monthly scope', description: 'A consistent creative presence.', items: ['Graphic design', 'Social media assets', 'Motion graphics', 'Agreed delivery & revision scope'], note: 'Deliverables and cadence defined together. Social management and ad spend are separate scope decisions.' },
 ];
+
+export function resolveRoute(pathname) {
+  const path = pathname.replace(/\/+$/, '') || '/';
+  if (routes.includes(path)) return { page: path, project: null };
+  const match = /^\/work\/([a-z0-9-]+)$/.exec(path);
+  const project = match && projects.find(item => item.slug === match[1]);
+  return project ? { page: '/project', project } : { page: '/404', project: null };
+}
 
