@@ -5,6 +5,7 @@ import '@fontsource/onest/latin-700.css';
 import '@fontsource/onest/latin-800.css';
 import './style.css';
 import { smoothTo, motionLimited, animateAction, setScrollLocked } from './motion.js';
+import { createProjectReel } from './project-reel.js';
 import { projects, serviceGroups, offers, resolveRoute, buildBrief } from './content.js';
 
 const main = document.querySelector('#main');
@@ -48,12 +49,12 @@ function closing(title = 'Have something<br>in mind?') {
 }
 
 function home() {
-  return `<section class="journey" aria-label="Journey through our stone landscape"><div class="hero-stage"><div class="hero-landscape"></div><div class="scene-mount" id="scene-mount" aria-hidden="true"></div><div class="hero-shade"></div><div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> Independent digital studio</p><h1>Build.<br>Design.<br><span>Scale.</span></h1><p class="hero-description">Websites, software, design, and AI.<br>For our clients. For ourselves.</p><a href="#possibilities" class="hero-explore">Explore the studio ${arrow('down')}</a></div><div class="hero-aside"><span class="small-rule"></span><p>Solid foundations.<br>Bold possibilities.</p><span>One studio.<br>Two ways of building.</span></div><div class="journey-copy" aria-hidden="true"><p class="eyebrow">Where ideas take shape</p><h2>A little imagination.<br>A lot of engineering.</h2></div><div class="portal-copy" aria-hidden="true"><span>Step inside.</span></div><div class="hero-bottom"><span class="hero-coordinate">Design meets development.</span><div class="journey-tracker" aria-label="Scroll journey"><span class="active" data-stage="0">Approach</span><i></i><span data-stage="1">Awaken</span><i></i><span data-stage="2">Enter</span></div><button class="motion-toggle" type="button" aria-pressed="false"><span class="motion-icon">Ⅱ</span> <span class="motion-label">Pause motion</span></button></div></div></section>
-    <section class="intro section-pad" id="possibilities"><div class="section-heading"><p class="eyebrow">Different paths. Same ambition.</p><h2>For your next chapter.<br>And our own.</h2><p>We bring ideas to life for businesses.<br>We also build the products we want to see in the world.</p></div><div class="two-paths"><a href="/work" data-link class="path-panel client-path"><span class="path-kind">Built for clients</span><div class="path-bottom"><h3>Your vision.<br>Our craft.</h3><p>Websites, systems, identities,<br>and creative that moves.</p><span class="text-link">Explore client work ${arrow()}</span></div></a><a href="/products" data-link class="path-panel product-path"><span class="path-kind">Products of our own</span><div class="path-bottom"><h3>Our ideas.<br>Out in the world.</h3><p>Independent software, shaped<br>by problems worth solving.</p><span class="text-link">Explore our products ${arrow()}</span></div></a></div></section>
-    <section class="selected section-pad"><div class="section-top"><div><p class="eyebrow">A glimpse of the possibilities</p><h2>Good ideas.<br>Given form.</h2></div><div><p class="concept-note">Selected design & product concepts.</p>${textLink('Explore all work', '/work')}</div></div>${workGrid(projects.slice(0, 2))}</section>
-    <section class="capabilities section-pad"><div class="section-top"><div><p class="eyebrow">What we bring to the table</p><h2>From first thought<br>to final detail.</h2></div>${textLink('Our services', '/services')}</div><div class="service-list">${serviceGroups.map(group => `<a href="/services#${group.id}" data-link class="service-row"><h3>${group.title}</h3><p>${group.items.join(' / ')}</p>${arrow()}</a>`).join('')}</div></section>
-    <section class="process section-pad"><div class="process-intro"><p class="eyebrow">How we work</p><h2>Thoughtful by design.<br>Solid by construction.</h2><p>Every project starts with a conversation.<br>Then we make the right things, in the right order.</p>${textLink('Meet the studio', '/studio')}</div><div class="process-steps">${[['01', 'Understand', 'Your goals, your people, and the problem worth solving.'], ['02', 'Shape', 'Explore the direction. Make the experience clear. Refine the details.'], ['03', 'Build', 'Develop, test, and launch—with a considered handover.']].map(([n, title, body]) => `<div><span>${n}</span><h3>${title}</h3><p>${body}</p></div>`).join('')}</div></section>
-    <section class="pricing-teaser section-pad"><div><p class="eyebrow">Make the next step clear.</p><h2>Big ideas.<br>Clear scope.</h2><p>Project-based work, ongoing creative partnerships,<br>and individual plans for our products.</p></div><div class="pricing-paths">${textLink('Explore project pricing', '/pricing')}${textLink('Explore product plans', '/products')}</div></section>${closing()}`;
+  return `<section class="journey" aria-label="3D logo scroll study"><div class="hero-stage"><div class="hero-landscape" style="background-image:url('/assets/volcanic-valley.png')"></div><div class="scene-mount" id="scene-mount" aria-hidden="true"></div><div class="hero-shade"></div><div class="hero-copy"><h1>Build.<br>Design.<br><span>Scale.</span></h1><p class="hero-description">Websites, software, design, and AI.<br>For our clients. For ourselves.</p><a href="#possibilities" class="hero-explore">Explore the studio ${arrow('down')}</a></div><div class="hero-aside"><span class="small-rule"></span><p>Solid foundations.<br>Bold possibilities.</p><span>One studio.<br>Two ways of building.</span></div><div class="journey-copy" aria-hidden="true"><h2>A little imagination.<br>A lot of engineering.</h2></div><div class="portal-copy" aria-hidden="true"><span>Step inside.</span></div><div class="hero-bottom"><span class="hero-coordinate">Design meets development.</span><div class="journey-tracker" aria-label="Scroll journey"><span class="active" data-stage="0">Approach</span><i></i><span data-stage="1">Turn</span><i></i><span data-stage="2">Reveal</span></div><button class="motion-toggle" type="button" aria-pressed="false" disabled><span class="motion-icon">Ⅱ</span> <span class="motion-label">Pause motion</span></button></div></div></section>
+    <section class="intro section-pad" id="possibilities"><div class="section-heading"><h2>For your next chapter.<br>And our own.</h2><p>We bring ideas to life for businesses.<br>We also build the products we want to see in the world.</p></div><div class="two-paths"><a href="/work" data-link class="path-panel client-path"><span class="path-kind">Built for clients</span><div class="path-bottom"><h3>Your vision.<br>Our craft.</h3><p>Websites, systems, identities,<br>and creative that moves.</p><span class="text-link">Explore client work ${arrow()}</span></div></a><a href="/products" data-link class="path-panel product-path"><span class="path-kind">Products of our own</span><div class="path-bottom"><h3>Our ideas.<br>Out in the world.</h3><p>Independent software, shaped<br>by problems worth solving.</p><span class="text-link">Explore our products ${arrow()}</span></div></a></div></section>
+    <section class="selected project-reel"><div class="project-reel-sticky section-pad"><div class="section-top"><div><h2>Good ideas.<br>Given form.</h2></div><div><p class="concept-note">Selected design & product concepts.</p>${textLink('Explore all work', '/work')}</div></div><div class="project-reel-viewport" tabindex="0" role="region" aria-label="Project showcase"><div class="project-reel-track">${projects.map(projectCard).join('')}</div></div><div class="reel-footer"><span class="reel-counter" aria-live="polite">01 / 04</span><div class="reel-progress" aria-hidden="true"><span></span></div><div class="reel-controls"><button type="button" data-reel="previous" aria-label="Previous project">${arrow('left')}</button><button type="button" data-reel="next" aria-label="Next project">${arrow()}</button></div></div></div></section>
+    <section class="capabilities section-pad"><div class="section-top"><div><h2>From first thought<br>to final detail.</h2></div>${textLink('Our services', '/services')}</div><div class="service-list">${serviceGroups.map(group => `<a href="/services#${group.id}" data-link class="service-row"><h3>${group.title}</h3><p>${group.items.join(' / ')}</p>${arrow()}</a>`).join('')}</div></section>
+    <section class="process section-pad"><div class="process-intro"><h2>Thoughtful by design.<br>Solid by construction.</h2><p>Every project starts with a conversation.<br>Then we make the right things, in the right order.</p>${textLink('Meet the studio', '/studio')}</div><div class="process-steps">${[['01', 'Understand', 'Your goals, your people, and the problem worth solving.'], ['02', 'Shape', 'Explore the direction. Make the experience clear. Refine the details.'], ['03', 'Build', 'Develop, test, and launch—with a considered handover.']].map(([n, title, body]) => `<div><span>${n}</span><h3>${title}</h3><p>${body}</p></div>`).join('')}</div></section>
+    <section class="pricing-teaser section-pad"><div><h2>Big ideas.<br>Clear scope.</h2><p>Project-based work, ongoing creative partnerships,<br>and individual plans for our products.</p></div><div class="pricing-paths">${textLink('Explore project pricing', '/pricing')}${textLink('Explore product plans', '/products')}</div></section>${closing()}`;
 }
 
 function pageIntro(eyebrow, title, description, extra = '') {
@@ -97,14 +98,17 @@ function updateMeta(page, project) {
   document.title = `${project ? project.name : names[page]} — devstackedmagazine`;
 }
 
-async function render({ focus = false } = {}) {
+function render({ focus = false } = {}) {
   const version = ++pageVersion;
+  disposeReel?.();
+  disposeReel = null;
   disposeScene?.();
   disposeScene = null;
   disconnectReveals?.();
   const { page, project } = resolveRoute(location.pathname);
   document.body.classList.toggle('home-page', page === '/');
   document.body.classList.remove('nav-open');
+  setScrollLocked(false); main.inert = footer.inert = false;
   renderChrome(page);
   const pages = { '/': home, '/work': work, '/products': products, '/services': services, '/pricing': pricing, '/studio': studio, '/contact': contact };
   main.innerHTML = project ? projectPage(project) : pages[page] ? pages[page]() : `${pageIntro('A different path', 'This page<br>isn’t here.', 'Let’s take you somewhere useful.', button('Return to the studio', '/', 'ink'))}`;
@@ -113,24 +117,25 @@ async function render({ focus = false } = {}) {
   header.classList.toggle('scrolled', scrollY > 30);
   setupInteractions();
   setupReveals();
-  if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({ behavior: 'instant' }));
+  const reel = main.querySelector('.project-reel');
+  if (reel) disposeReel = createProjectReel(reel);
   if (page === '/') {
-    try {
-      const { createScene } = await import('./scene.js');
+    import('./scene.js').then(({ createScene }) => {
       if (version !== pageVersion) return;
       disposeScene = createScene(document.querySelector('#scene-mount'), document.querySelector('.journey'), motionPreference.matches);
-    } catch (error) {
+    }).catch(error => {
+      if (version !== pageVersion) return;
       console.warn('Landscape fallback active:', error.message);
       document.querySelector('.journey')?.classList.add('scene-fallback');
       const toggle = document.querySelector('.motion-toggle');
       if (toggle) { toggle.disabled = true; toggle.querySelector('.motion-label').textContent = 'Static view'; }
-    }
+    });
   }
 }
 
 function setupReveals() {
   const elements = [...main.querySelectorAll('.section-top, .section-heading, .service-row, .process-steps > div, .principles > article')];
-  if (motionPreference.matches) return;
+  if (motionLimited()) return;
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
     if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); }
   }), { threshold: .12 });
