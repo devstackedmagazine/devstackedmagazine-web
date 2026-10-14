@@ -78,6 +78,13 @@ function studio() {
   return `${pageIntro('The studio', 'Creative minds.<br>Builder mentality.', 'We’re devstackedmagazine. An independent digital studio<br>building for our clients and creating products of our own.')}<section class="studio-landscape"><div class="studio-landscape-caption"><span>Built on curiosity.</span><span>Shaped by the work.</span></div>${mark}</section><section class="studio-story section-pad"><p class="eyebrow">Two paths. One mindset.</p><div><h2>We make things<br>we want to stand behind.</h2><p>Client projects let us turn someone else’s ambition into a tangible experience. Our own products give us room to explore problems, test ideas, and create something useful.</p><p>Across both, we bring software, design, motion, and AI into the same conversation. The medium changes. The attention to the work doesn’t.</p></div></section><section class="principles section-pad">${[['Clarity first.', 'Understand the job before choosing the solution. Give people a clear way forward.'], ['Details matter.', 'The big idea and the small interactions should belong to the same experience.'], ['Build with purpose.', 'Use the tools the work needs. Keep the result useful, considered, and understandable.']].map(([title, description]) => `<article><span class="small-rule"></span><h3>${title}</h3><p>${description}</p></article>`).join('')}</section>${closing('Your ambition.<br>Our next conversation.')}`;
 }
 
+function contact() {
+  const query = new URLSearchParams(location.search);
+  const offer = offers.find(item => item.id === query.get('offer'));
+  const requested = query.get('service') || (offer?.id === 'creative' ? 'design' : offer?.id === 'system' ? 'ai' : offer ? 'build' : '');
+  return `${pageIntro('Start a conversation', 'What are<br>you imagining?', 'A new website. A better system. A different direction.<br>Tell us what’s on your mind.')}<section class="contact-section section-pad"><aside class="contact-aside"><span class="small-rule"></span><h2>Good work starts<br>with understanding.</h2><p>You don’t need every answer.<br>A starting point is enough.</p><div class="contact-expectations"><span>We’ll shape the brief around</span><ul class="plain-list"><li>Your goals</li><li>The right scope</li><li>A practical next step</li></ul></div><div class="contact-product-help"><p>Looking for one of our apps?</p>${textLink('Explore our products', '/products')}</div></aside><div class="contact-form-wrap"><form id="brief-form"><div class="form-row"><label>Your name<input name="name" autocomplete="name" required maxlength="120" placeholder="Alex Morgan"></label><label>Email address<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="alex@company.com"></label></div><label>Company <span class="optional">(optional)</span><input name="company" autocomplete="organization" maxlength="160" placeholder="Your company or project"></label><fieldset><legend>What can we help with?</legend><div class="service-choices">${serviceGroups.map(group => `<label class="service-choice"><input type="checkbox" name="services" value="${group.title}" ${requested === group.id ? 'checked' : ''}><span>${group.title}</span></label>`).join('')}</div></fieldset><label>Tell us about your idea<textarea name="details" required minlength="20" maxlength="5000" rows="4" placeholder="What are you building, and what would a great result look like?">${offer ? `I’m interested in ${offer.name.toLowerCase()}. ` : ''}</textarea></label><label>When would you like to start?<select name="timing"><option>Let’s figure it out together</option><option>As soon as practical</option><option>In the next 1–3 months</option><option>Later this year</option></select></label><p class="form-error" id="form-error" role="alert"></p><button class="button ink" type="submit">Prepare project brief ${arrow()}</button><p class="form-note">Save a brief to share with us. Nothing is sent or stored on a server.</p></form><div class="brief-result" id="brief-result" hidden><span class="status-tag">Ready to share</span><h2>Your starting point<br>is ready.</h2><p>Copy or download your brief. Preparing it hasn’t sent an inquiry.</p><pre id="brief-preview"></pre><div class="brief-actions"><button class="button ink" id="copy-brief" type="button">Copy brief ${arrow()}</button><button class="button outline" id="download-brief" type="button">Download .txt ${arrow('down')}</button></div><p id="brief-feedback" role="status"></p><button class="text-link" id="edit-brief" type="button">Edit your brief ${arrow()}</button></div></div></section>`;
+}
+
 function updateMeta(page, project) {
   const names = { '/': 'Websites, software & bold ideas', '/work': 'Client work', '/products': 'Our products', '/services': 'Services', '/pricing': 'Pricing', '/studio': 'The studio', '/contact': 'Let’s talk', '/404': 'Page not found' };
   document.title = `${project ? project.name : names[page]} — devstackedmagazine`;
@@ -92,7 +99,7 @@ async function render({ focus = false } = {}) {
   document.body.classList.toggle('home-page', page === '/');
   document.body.classList.remove('nav-open');
   renderChrome(page);
-  const pages = { '/': home, '/work': work, '/products': products, '/services': services, '/pricing': pricing, '/studio': studio };
+  const pages = { '/': home, '/work': work, '/products': products, '/services': services, '/pricing': pricing, '/studio': studio, '/contact': contact };
   main.innerHTML = project && typeof projectPage === 'function' ? projectPage(project) : pages[page] ? pages[page]() : `${pageIntro('A different path', 'This page<br>isn’t here.', 'Let’s take you somewhere useful.', button('Return to the studio', '/', 'ink'))}`;
   updateMeta(page, project);
   if (focus) main.focus({ preventScroll: true });
@@ -151,6 +158,49 @@ function setupInteractions() {
     main.querySelector('.filter-status').textContent = `${items.length} ${items.length === 1 ? 'concept' : 'concepts'} shown.`;
   }));
 
+  const form = main.querySelector('#brief-form');
+  if (form) {
+    briefText = '';
+    if (contactDraft) {
+      for (const key of ['name', 'email', 'company', 'details', 'timing']) form.elements.namedItem(key).value = contactDraft[key] || '';
+      form.querySelectorAll('[name="services"]').forEach(input => { input.checked ||= contactDraft.services.includes(input.value); });
+    }
+    const saveDraft = () => {
+      const data = new FormData(form);
+      contactDraft = { ...Object.fromEntries(data), services: data.getAll('services') };
+    };
+    form.addEventListener('input', saveDraft);
+    form.addEventListener('change', saveDraft);
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const data = new FormData(form);
+      try {
+        briefText = buildBrief({ ...Object.fromEntries(data), services: data.getAll('services') });
+        main.querySelector('#form-error').textContent = '';
+        main.querySelector('#brief-preview').textContent = briefText;
+        form.hidden = true;
+        const result = main.querySelector('#brief-result');
+        result.hidden = false;
+        result.setAttribute('tabindex', '-1');
+        result.focus();
+        result.scrollIntoView({ behavior: motionPreference.matches ? 'instant' : 'smooth', block: 'center' });
+      } catch (error) { main.querySelector('#form-error').textContent = error.message; }
+    });
+    main.querySelector('#edit-brief').onclick = () => { main.querySelector('#brief-result').hidden = true; form.hidden = false; form.querySelector('input').focus(); };
+    main.querySelector('#copy-brief').onclick = async () => {
+      try { await navigator.clipboard.writeText(briefText); main.querySelector('#brief-feedback').textContent = 'Brief copied.'; }
+      catch { main.querySelector('#brief-feedback').textContent = 'Clipboard unavailable. Download the brief or select and copy its text.'; }
+    };
+    main.querySelector('#download-brief').onclick = () => {
+      const url = URL.createObjectURL(new Blob([briefText], { type: 'text/plain;charset=utf-8' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'devstackedmagazine-project-brief.txt';
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      main.querySelector('#brief-feedback').textContent = 'Brief download prepared.';
+    };
+  }
 }
 
 document.addEventListener('click', event => {
