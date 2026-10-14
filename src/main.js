@@ -58,6 +58,10 @@ function pageIntro(eyebrow, title, description, extra = '') {
   return `<section class="page-intro section-pad"><p class="eyebrow">${eyebrow}</p><h1>${title}</h1><div class="intro-bottom"><p>${description}</p>${extra}</div></section>`;
 }
 
+function work() {
+  return `${pageIntro('Client work & creative possibilities', 'Ideas are a start.<br>Execution is everything.', 'Websites, software, design, and motion.<br>A preview of the directions we can explore together.')}<section class="portfolio section-pad"><div class="portfolio-controls"><div class="filter-list" role="group" aria-label="Filter work">${['All work', 'Websites', 'Software', 'Design & motion'].map((label, i) => `<button type="button" class="filter ${i === 0 ? 'active' : ''}" data-filter="${label}" aria-pressed="${i === 0}">${label}</button>`).join('')}</div><p class="concept-note">Illustrative concept studies</p></div><div id="portfolio-grid">${workGrid()}</div><p class="filter-status sr-only" aria-live="polite"></p></section>${closing('Let’s build<br>your next chapter.')}`;
+}
+
 function updateMeta(page, project) {
   const names = { '/': 'Websites, software & bold ideas', '/work': 'Client work', '/products': 'Our products', '/services': 'Services', '/pricing': 'Pricing', '/studio': 'The studio', '/contact': 'Let’s talk', '/404': 'Page not found' };
   document.title = `${project ? project.name : names[page]} — devstackedmagazine`;
@@ -72,7 +76,7 @@ async function render({ focus = false } = {}) {
   document.body.classList.toggle('home-page', page === '/');
   document.body.classList.remove('nav-open');
   renderChrome(page);
-  const pages = { '/': home };
+  const pages = { '/': home, '/work': work };
   main.innerHTML = project && typeof projectPage === 'function' ? projectPage(project) : pages[page] ? pages[page]() : `${pageIntro('A different path', 'This page<br>isn’t here.', 'Let’s take you somewhere useful.', button('Return to the studio', '/', 'ink'))}`;
   updateMeta(page, project);
   if (focus) main.focus({ preventScroll: true });
@@ -123,6 +127,13 @@ function setupInteractions() {
     }
   };
   footer.querySelector('.back-top').onclick = () => { scrollTo({ top: 0, behavior: motionPreference.matches ? 'instant' : 'smooth' }); main.focus({ preventScroll: true }); };
+
+  main.querySelectorAll('[data-filter]').forEach(filter => filter.addEventListener('click', () => {
+    main.querySelectorAll('[data-filter]').forEach(item => { item.classList.toggle('active', item === filter); item.setAttribute('aria-pressed', String(item === filter)); });
+    const items = filter.dataset.filter === 'All work' ? projects : projects.filter(project => project.category === filter.dataset.filter);
+    main.querySelector('#portfolio-grid').innerHTML = workGrid(items);
+    main.querySelector('.filter-status').textContent = `${items.length} ${items.length === 1 ? 'concept' : 'concepts'} shown.`;
+  }));
 
 }
 
