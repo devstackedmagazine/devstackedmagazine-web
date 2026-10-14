@@ -1,6 +1,6 @@
 # devstackedmagazine — visual brand guide
 
-Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, heavyweight display typography. Final logo artwork is pending; typography selected at the user's request.
+Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, clean compact bold typography. User chose this type direction after rejecting Archivo Black. to3D conversion is pending image selection in its upload widget.
 
 ## Direction
 
@@ -12,7 +12,7 @@ The terrain and sculptural brand symbol anchor the website. Carry their material
 
 Proposed treatment:
 
-- Set the temporary text wordmark in Manrope, weight 800, pending supplied final artwork. Use the actual brand symbol; do not invent a replacement D.
+- Set the temporary text wordmark in Onest, weight 800, pending supplied final artwork. Use the actual brand symbol; do not invent a replacement D.
 - Keep it on one line. Never stretch, outline, rotate, or add effects.
 - Use ink on paper or paper on ink. Keep the accent for supporting elements.
 - Reserve clear space of at least one lowercase letter height on every side.
@@ -41,8 +41,8 @@ Error, success, and warning colors belong to each product's accessible interface
 
 | Role | Proposed family | Treatment |
 | --- | --- | --- |
-| Headlines and display | Archivo Black | 400, its native heavy display weight; no synthetic bold |
-| Wordmark and body | Manrope | 400–500 body, 600 labels, 700–800 supporting emphasis and temporary wordmark |
+| Headlines and display | Onest | 700, compact spacing and sentence case |
+| Wordmark and body | Onest | 400–500 body, 600 labels, 700–800 supporting emphasis and temporary wordmark |
 | Sans fallback | `system-ui, sans-serif` | Use when Inter is unavailable |
 | Mono fallback | `ui-monospace, monospace` | Use when IBM Plex Mono is unavailable |
 
@@ -53,7 +53,7 @@ Error, success, and warning colors belong to each product's accessible interface
 - Avoid thin weights, extended all-caps paragraphs, and decorative type effects.
 - Keep the exact brand name lowercase; ordinary copy uses normal capitalization.
 
-Fonts are self-hosted via Fontsource. Both packages declare OFL-1.1; retain licenses and verify required language coverage before production use. Inter and IBM Plex Mono were rejected for this website.
+Onest is self-hosted via Fontsource and declares OFL-1.1. Retain its license and verify required language coverage before production use. Inter, IBM Plex Mono, and Archivo Black were rejected for this website.
 
 ## Layout and spacing
 
