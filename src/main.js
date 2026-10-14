@@ -62,6 +62,10 @@ function work() {
   return `${pageIntro('Client work & creative possibilities', 'Ideas are a start.<br>Execution is everything.', 'Websites, software, design, and motion.<br>A preview of the directions we can explore together.')}<section class="portfolio section-pad"><div class="portfolio-controls"><div class="filter-list" role="group" aria-label="Filter work">${['All work', 'Websites', 'Software', 'Design & motion'].map((label, i) => `<button type="button" class="filter ${i === 0 ? 'active' : ''}" data-filter="${label}" aria-pressed="${i === 0}">${label}</button>`).join('')}</div><p class="concept-note">Illustrative concept studies</p></div><div id="portfolio-grid">${workGrid()}</div><p class="filter-status sr-only" aria-live="polite"></p></section>${closing('Let’s build<br>your next chapter.')}`;
 }
 
+function products() {
+  return `${pageIntro('Products of our own', 'Independent ideas.<br>Useful software.', 'Alongside client work, we develop our own SaaS apps.<br>Each product deserves its own purpose, identity, and home.')}<section class="product-directory section-pad"><p class="concept-note product-disclaimer">These interface studies demonstrate the product area. They are concepts, not launched SaaS apps.</p>${[projects[1], projects[3]].map((project, i) => `<article class="product-feature ${i % 2 ? 'reverse' : ''}"><div class="product-feature-visual">${mockup(project)}</div><div class="product-feature-copy"><span class="status-tag">Interface concept</span><h2>${project.name}</h2><p>${project.description}</p><ul class="plain-list">${project.scope.map(item => `<li>${item}</li>`).join('')}</ul>${button('Explore the concept', `/work/${project.slug}`, 'ink')}<span class="product-plan-note">Product availability and plans will appear with the real app.</span></div></article>`).join('')}</section><section class="product-philosophy section-pad"><p class="eyebrow">Why we make our own</p><h2>We like solving problems.<br>Sometimes, they’re our own.</h2><p>Our products give us space to explore ideas, build useful tools, and keep refining how we create software.</p>${textLink('About the studio', '/studio')}</section>${closing('An idea worth<br>building together?')}`;
+}
+
 function updateMeta(page, project) {
   const names = { '/': 'Websites, software & bold ideas', '/work': 'Client work', '/products': 'Our products', '/services': 'Services', '/pricing': 'Pricing', '/studio': 'The studio', '/contact': 'Let’s talk', '/404': 'Page not found' };
   document.title = `${project ? project.name : names[page]} — devstackedmagazine`;
@@ -76,7 +80,7 @@ async function render({ focus = false } = {}) {
   document.body.classList.toggle('home-page', page === '/');
   document.body.classList.remove('nav-open');
   renderChrome(page);
-  const pages = { '/': home, '/work': work };
+  const pages = { '/': home, '/work': work, '/products': products };
   main.innerHTML = project && typeof projectPage === 'function' ? projectPage(project) : pages[page] ? pages[page]() : `${pageIntro('A different path', 'This page<br>isn’t here.', 'Let’s take you somewhere useful.', button('Return to the studio', '/', 'ink'))}`;
   updateMeta(page, project);
   if (focus) main.focus({ preventScroll: true });
