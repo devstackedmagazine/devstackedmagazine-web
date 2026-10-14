@@ -207,11 +207,12 @@ function setupInteractions() {
         const result = main.querySelector('#brief-result');
         result.hidden = false;
         result.setAttribute('tabindex', '-1');
-        result.focus();
-        result.scrollIntoView({ behavior: motionPreference.matches ? 'instant' : 'smooth', block: 'center' });
+        result.focus({ preventScroll: true });
+        animateAction(result, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'translateY(0)' }]);
+        smoothTo(result, { offset: -120 });
       } catch (error) { main.querySelector('#form-error').textContent = error.message; }
     });
-    main.querySelector('#edit-brief').onclick = () => { main.querySelector('#brief-result').hidden = true; form.hidden = false; form.querySelector('input').focus(); };
+    main.querySelector('#edit-brief').onclick = () => { main.querySelector('#brief-result').hidden = true; form.hidden = false; animateAction(form, [{ opacity: 0 }, { opacity: 1 }]); form.querySelector('input').focus({ preventScroll: true }); smoothTo(form, { offset: -120 }); };
     main.querySelector('#copy-brief').onclick = async () => {
       try { await navigator.clipboard.writeText(briefText); main.querySelector('#brief-feedback').textContent = 'Brief copied.'; }
       catch { main.querySelector('#brief-feedback').textContent = 'Clipboard unavailable. Download the brief or select and copy its text.'; }
