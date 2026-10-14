@@ -57,8 +57,8 @@ function home() {
     <section class="pricing-teaser section-pad"><div><h2>Big ideas.<br>Clear scope.</h2><p>Project-based work, ongoing creative partnerships,<br>and individual plans for our products.</p></div><div class="pricing-paths">${textLink('Explore project pricing', '/pricing')}${textLink('Explore product plans', '/products')}</div></section>${closing()}`;
 }
 
-function pageIntro(eyebrow, title, description, extra = '') {
-  return `<section class="page-intro section-pad"><p class="eyebrow">${eyebrow}</p><h1>${title}</h1><div class="intro-bottom"><p>${description}</p>${extra}</div></section>`;
+function pageIntro(_label, title, description, extra = '') {
+  return `<section class="page-intro section-pad"><h1>${title}</h1><div class="intro-bottom"><p>${description}</p>${extra}</div></section>`;
 }
 
 function work() {
