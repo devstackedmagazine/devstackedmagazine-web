@@ -4,6 +4,7 @@ import '@fontsource/onest/latin-600.css';
 import '@fontsource/onest/latin-700.css';
 import '@fontsource/onest/latin-800.css';
 import './style.css';
+import { smoothTo, motionLimited, animateAction, setScrollLocked } from './motion.js';
 import { projects, serviceGroups, offers, resolveRoute, buildBrief } from './content.js';
 
 const main = document.querySelector('#main');
@@ -15,6 +16,8 @@ let disconnectReveals = null;
 let pageVersion = 0;
 let briefText = '';
 let contactDraft = null;
+let disposeReel = null;
+let activeTransition = null;
 
 const arrow = (direction = 'right') => `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" class="arrow ${direction}"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/></svg>`;
 const mark = '';
