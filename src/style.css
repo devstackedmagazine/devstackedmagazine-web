@@ -100,3 +100,28 @@ input,textarea,select{transition:border-color .35s var(--ease),background-color 
 .faq-list details::details-content{block-size:0;opacity:0;overflow:clip;transition:block-size .45s var(--ease),opacity .35s var(--ease),content-visibility .45s;transition-behavior:allow-discrete}
 .faq-list details[open]::details-content{block-size:auto;opacity:1}.faq-list summary span{transition:transform .45s var(--ease)}.faq-list details[open] summary span{transform:rotate(45deg)}
 .hero-copy{top:30%}.section-heading{grid-template-columns:1.25fr 1fr}.page-intro{padding-top:175px}
+/* Good ideas. Given form. — a large horizontal project reel. */
+.project-reel{position:relative;background:var(--surface)}
+.project-reel-sticky{overflow:hidden;padding-top:100px;padding-bottom:55px}
+.project-reel .section-top{margin-bottom:35px}
+.project-reel-viewport{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#727b60 transparent;scroll-snap-type:x mandatory;overscroll-behavior-x:contain}
+.project-reel-track{display:flex;gap:30px;width:max-content;will-change:transform;padding-bottom:18px}
+.project-reel .project-card{flex:0 0 auto;width:clamp(320px,54vw,820px);padding:0;scroll-snap-align:start}
+.project-reel .project-visual{aspect-ratio:1.7;padding:30px}
+.project-reel .mockup{max-height:100%;aspect-ratio:1.55}
+.reel-pinned{height:calc(max(100svh,650px) + var(--reel-travel,0px))}
+.reel-pinned .project-reel-sticky{position:sticky;top:0;height:100svh;min-height:650px;display:flex;flex-direction:column;justify-content:center;padding-top:120px}
+.reel-pinned .project-reel-viewport{overflow:hidden;scroll-snap-type:none}
+.reel-pinned .project-reel-track{padding-bottom:0}
+.reel-pinned .project-card{width:clamp(340px,49vw,740px)}
+.reel-pinned .project-visual{height:clamp(210px,43svh,450px);aspect-ratio:auto}
+.reel-footer{display:flex;align-items:center;gap:28px;margin-top:24px}
+.reel-counter{font-size:12px;color:var(--muted);min-width:55px;font-variant-numeric:tabular-nums}
+.reel-progress{height:1px;flex:1;background:var(--rule);overflow:hidden}
+.reel-progress span{height:100%;width:100%;display:block;background:var(--lime);transform-origin:left;transform:scaleX(var(--reel-progress,0))}
+.reel-controls{display:flex;gap:10px}.reel-controls button{display:grid;place-items:center;width:46px;height:46px;border:1px solid #ffffff35;background:transparent}
+.reel-controls button:hover{border-color:var(--lime);color:var(--lime)}.reel-controls button:disabled{opacity:.25;transform:none}
+@media(max-width:700px){.hero-copy{top:auto}.project-reel-sticky{padding-top:65px;padding-bottom:65px}.project-reel .section-top{gap:20px}.project-reel .project-card{width:82vw}.project-reel .project-visual{height:300px;aspect-ratio:auto;padding:20px}.project-reel .mockup{aspect-ratio:1.05}.project-reel .section-top h2{font-size:40px}.reel-footer{gap:15px}.project-reel .project-meta h3{font-size:23px}.page-intro{padding-top:135px}}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
+.product-feature-copy>.status-tag,.project-overview .status-tag,.brief-result>.status-tag{margin:18px 0}.price-offer .offer-model{margin:14px 0 20px}
