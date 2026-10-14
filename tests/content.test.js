@@ -17,3 +17,9 @@ test('brief preserves actual details and includes only allowed services', () => 
   assert.match(brief, /architecture studio/);
 });
 
+test('brief rejects missing, invalid and oversized fields', () => {
+  const valid = { name: 'Alex', email: 'alex@example.com', details: 'A clear website project description.' };
+  for (const changes of [{ name: '' }, { email: 'not-email' }, { details: 'Too short' }, { details: 'a'.repeat(5001) }, { name: 'a'.repeat(121) }]) {
+    assert.throws(() => buildBrief({ ...valid, ...changes }));
+  }
+});
