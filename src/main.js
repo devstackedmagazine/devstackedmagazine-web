@@ -18,7 +18,7 @@ let briefText = '';
 let contactDraft = null;
 
 const arrow = (direction = 'right') => `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" class="arrow ${direction}"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/></svg>`;
-const mark = `<svg class="brand-mark" viewBox="0 0 48 52" fill="none" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M5 2h18c16 0 23 9 23 24s-7 24-23 24H5V2zm10 9v30h8c9 0 13-5 13-15s-4-15-13-15h-8z"/><path d="M5 15 42 36l-5 9L5 26z" fill="var(--lime)"/></svg>`;
+const mark = '';
 const button = (text, href, variant = '') => `<a class="button ${variant}" href="${href}" data-link>${text}${arrow()}</a>`;
 const textLink = (text, href) => `<a class="text-link" href="${href}" data-link>${text}${arrow()}</a>`;
 
