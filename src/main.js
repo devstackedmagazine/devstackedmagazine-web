@@ -177,7 +177,9 @@ function setupInteractions() {
   main.querySelectorAll('[data-filter]').forEach(filter => filter.addEventListener('click', () => {
     main.querySelectorAll('[data-filter]').forEach(item => { item.classList.toggle('active', item === filter); item.setAttribute('aria-pressed', String(item === filter)); });
     const items = filter.dataset.filter === 'All work' ? projects : projects.filter(project => project.category === filter.dataset.filter);
-    main.querySelector('#portfolio-grid').innerHTML = workGrid(items);
+    const grid = main.querySelector('#portfolio-grid');
+    grid.innerHTML = workGrid(items);
+    animateAction(grid, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }]);
     main.querySelector('.filter-status').textContent = `${items.length} ${items.length === 1 ? 'concept' : 'concepts'} shown.`;
   }));
 
