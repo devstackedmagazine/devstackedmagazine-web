@@ -146,11 +146,22 @@ function setupReveals() {
 function setupInteractions() {
   const menu = header.querySelector('.menu-toggle');
   const mobile = header.querySelector('#mobile-nav');
-  const setMenu = open => {
+  let menuAnimation = null, menuVersion = 0;
+  const setMenu = async open => {
+    const version = ++menuVersion;
+    menuAnimation?.cancel();
     menu.setAttribute('aria-expanded', String(open));
     menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-    mobile.hidden = !open;
     document.body.classList.toggle('nav-open', open);
+    setScrollLocked(open); main.inert = footer.inert = open;
+    if (open) {
+      mobile.hidden = false;
+      menuAnimation = animateAction(mobile, [{ opacity: 0, transform: 'translateY(-12px)' }, { opacity: 1, transform: 'translateY(0)' }]);
+    } else {
+      menuAnimation = animateAction(mobile, [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: 220 });
+      await menuAnimation?.finished.catch(() => {});
+      if (version === menuVersion) mobile.hidden = true;
+    }
   };
   menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
   header.onkeydown = event => {
@@ -161,7 +172,7 @@ function setupInteractions() {
       if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0].focus(); }
     }
   };
-  footer.querySelector('.back-top').onclick = () => { scrollTo({ top: 0, behavior: motionPreference.matches ? 'instant' : 'smooth' }); main.focus({ preventScroll: true }); };
+  footer.querySelector('.back-top').onclick = () => { smoothTo(0); main.focus({ preventScroll: true }); };
 
   main.querySelectorAll('[data-filter]').forEach(filter => filter.addEventListener('click', () => {
     main.querySelectorAll('[data-filter]').forEach(item => { item.classList.toggle('active', item === filter); item.setAttribute('aria-pressed', String(item === filter)); });
