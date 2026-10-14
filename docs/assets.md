@@ -21,3 +21,9 @@ Final prompt:
 Edit target: the attached agency reference image. Task: remove ALL typography and thin lime underlines in the left and right sides, and the small DEVSTACKED wordmark at top left. Inpaint only these text areas with matching dark volcanic landscape, mist and sky. Preserve the central stone D-shaped brand monument EXACTLY: its distinctive angular inner cuts, diagonal stone slash, luminous lime wedge, top curved stone edge, material, size, position and perspective. Do not redesign the logo or turn it into a generic letter D. Preserve the entire original dark volcanic environment, dramatic black rocky mountains, monumental vertical stone slabs, electric lime light, water reflections and cinematic lighting. Preserve central logo and its surroundings as closely to original pixels as possible. This is a clean image plate for a website, not a UI mockup. Keep the same wide cinematic aspect ratio. No text, no letters other than the original sculptural monument, no UI, no icons, no new objects, no watermarks. Changes limited to removing the left/right text and the tiny top-left wordmark.
 
 Current fonts: Archivo Black and Manrope via Fontsource. Both packages declare OFL-1.1. Inter, IBM Plex Mono, and the invented SVG D marks were removed after review. Earlier asset notes describe the initial rejected version.
+
+## Current typography — Onest
+
+User rejected Archivo Black and selected clean, compact, bold type. Onest, self-hosted via Fontsource, is now the website's display and body family. The package declares OFL-1.1. Earlier typography notes are historical revisions.
+
+The to3D widget was invoked for converting `public/assets/stone-monument.png`; generation is pending the user's image selection. No model or job ID is recorded until the conversion actually starts.
