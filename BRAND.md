@@ -1,6 +1,6 @@
 # devstackedmagazine — visual brand guide
 
-Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, clean compact bold typography. User chose this type direction after rejecting Archivo Black. to3D conversion is pending image selection in its upload widget.
+Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, clean compact bold typography. User chose this type direction after rejecting Archivo Black. Native WebGL stone gateway replaces the abandoned conversion workflow.
 
 ## Direction
 
@@ -74,7 +74,7 @@ Use real work: website captures, product screens, process details, and original 
 - Build illustrations from simple lines, grids, blocks, and diagrams that explain a specific idea.
 - Use lime for annotations or one focal detail, not a tint over every image.
 - Label conceptual mockups when they could be mistaken for shipped work.
-- Use the actual logo as the monument. A finished interactive 3D scene requires faithful geometry, materials, and lighting; a flat reference plate is an interim art-direction treatment, not a finished 3D model.
+- Preserve the actual logo artwork. Current scene uses real textured stone slabs, water reflections and a moving camera around a reference-art plane. The logo itself remains raster artwork pending a clear asset; do not invent its geometry.
 
 ## Icons and interface details
 
@@ -110,4 +110,4 @@ Carousels follow a clear sequence: opening idea, supporting evidence or steps, t
 
 ## Decisions still needed
 
-Supply final logo artwork and define small-size variants. Replace illustrative portfolio/product content, finalize pricing and contact delivery, and build the finished textured 3D scene from approved assets. Keep visual rules here as the source of truth.
+Supply final logo artwork and define small-size variants. Replace illustrative portfolio/product content, finalize pricing and contact delivery, and review scene performance on target devices. Keep visual rules here as the source of truth.
