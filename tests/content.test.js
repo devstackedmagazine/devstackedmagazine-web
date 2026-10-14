@@ -9,3 +9,11 @@ test('main pages and project deep links resolve; unknown paths stay unknown', ()
   assert.equal(resolveRoute('/products/../../contact').page, '/404');
 });
 
+test('brief preserves actual details and includes only allowed services', () => {
+  const brief = buildBrief({ name: '  Alex  ', email: 'alex@example.com', details: 'We need a new website for our architecture studio.', services: ['Websites & software', 'Untrusted category', 'Websites & software'] });
+  assert.match(brief, /Name: Alex/);
+  assert.match(brief, /Services: Websites & software\n/);
+  assert.doesNotMatch(brief, /Untrusted category/);
+  assert.match(brief, /architecture studio/);
+});
+
