@@ -1,18 +1,18 @@
 # devstackedmagazine — visual brand guide
 
-Status: Draft visual direction. Only the naming rule is confirmed; all other guidance below is proposed until approved.
+Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, heavyweight display typography. Final logo artwork is pending; typography selected at the user's request.
 
 ## Direction
 
-An editorial identity for a company building websites, publishing content, and developing SaaS products. Use strong typography, generous space, visible structure, and one sharp accent. Aim for clear, considered, and technically capable.
+A cinematic identity for a studio building client websites, software and systems, design and social creative, motion graphics, and AI workflows, alongside SaaS products of its own. Use dark stone landscapes, strong typography, generous space, and lime light. Client services and owned products receive equal prominence.
 
-The name suggests a magazine; use that as a visual cue, without implying that publishing is the company's only business.
+The terrain and sculptural brand symbol anchor the website. Carry their material and lighting into page framing; preserve each actual project's visual identity.
 
 ## Name and wordmark
 
 Proposed treatment:
 
-- Set the wordmark as live text in the primary sans-serif, weight 700.
+- Set the temporary text wordmark in Manrope, weight 800, pending supplied final artwork. Use the actual brand symbol; do not invent a replacement D.
 - Keep it on one line. Never stretch, outline, rotate, or add effects.
 - Use ink on paper or paper on ink. Keep the accent for supporting elements.
 - Reserve clear space of at least one lowercase letter height on every side.
@@ -25,13 +25,15 @@ Custom logo artwork, compact marks, and minimum sizes remain open until tested w
 
 | Role | Color | Hex | Use |
 | --- | --- | --- | --- |
-| Paper | Warm white | `#F5F3EE` | Main backgrounds, light text on ink |
+| Paper | Warm white | `#F5F3EE` | Text and selected light UI details on dark surfaces |
 | Ink | Near black | `#171717` | Main text, dark backgrounds, wordmark |
+| Night | Deep black | `#101311` | Hero, navigation, footer |
+| Basalt | Dark stone | `#0E110F` | Main page surfaces |
 | Accent | Electric lime | `#D7FF3F` | Primary actions, selected details, highlights |
-| Secondary text | Gray | `#62625C` | Supporting text on paper |
-| Rule | Light gray | `#D8D6CE` | Dividers and decorative boundaries on paper |
+| Secondary text | Pale gray | `#B0B6A8` | Supporting text on dark surfaces |
+| Rule | Transparent paper | `#FFFFFF20` | Decorative dividers on dark surfaces |
 
-Keep most surfaces paper or ink. Use lime sparingly so it retains emphasis. Put ink text on lime; avoid lime text on paper. Treat rule gray as decorative, not as the sole boundary of a form control.
+Keep page surfaces dark. Light areas belong to actual project previews and small controls, not large website sections. Use lime deliberately. Put ink text on lime. Treat rule gray as decorative, not as the sole boundary of a form control.
 
 Error, success, and warning colors belong to each product's accessible interface system. Do not use the brand accent to communicate every status.
 
@@ -39,25 +41,25 @@ Error, success, and warning colors belong to each product's accessible interface
 
 | Role | Proposed family | Treatment |
 | --- | --- | --- |
-| Wordmark, headings, body | Inter | 400 body, 500 labels, 600–700 headings |
-| Code and technical annotations | IBM Plex Mono | 400–500; use sparingly |
+| Headlines and display | Archivo Black | 400, its native heavy display weight; no synthetic bold |
+| Wordmark and body | Manrope | 400–500 body, 600 labels, 700–800 supporting emphasis and temporary wordmark |
 | Sans fallback | `system-ui, sans-serif` | Use when Inter is unavailable |
 | Mono fallback | `ui-monospace, monospace` | Use when IBM Plex Mono is unavailable |
 
 - Web body text: 16–18 px, line height 1.5–1.65.
 - Long-form reading width: roughly 60–75 characters.
-- Headlines: compact, sentence case, line height 1.05–1.2. Scale to fit the medium without clipping.
+- Headlines: compact, line height 0.95–1.1. The hero can use large uppercase blocks; scale to fit without clipping.
 - Labels: short and legible; uppercase only for brief section markers.
 - Avoid thin weights, extended all-caps paragraphs, and decorative type effects.
 - Keep the exact brand name lowercase; ordinary copy uses normal capitalization.
 
-Font selection is provisional. Verify licensing and language coverage before production use.
+Fonts are self-hosted via Fontsource. Both packages declare OFL-1.1; retain licenses and verify required language coverage before production use. Inter and IBM Plex Mono were rejected for this website.
 
 ## Layout and spacing
 
 - Start from an 8 px spacing rhythm; use 4 px for small optical adjustments.
 - Use consistent outer margins and align titles, text, and media to shared edges.
-- Prefer an editorial grid: a dominant headline, supporting copy, and one focal image or product view.
+- Prefer a dominant sculptural landscape in the opening, then clear layouts that give the work and products room.
 - Use thin rules and whitespace to separate content. Add a container only when it clarifies grouping or interaction.
 - Keep corners restrained: 0–8 px for panels and controls; larger rounding only for a clear functional reason.
 - Build mobile layouts around reading order. Stack columns and preserve comfortable margins.
@@ -72,7 +74,7 @@ Use real work: website captures, product screens, process details, and original 
 - Build illustrations from simple lines, grids, blocks, and diagrams that explain a specific idea.
 - Use lime for annotations or one focal detail, not a tint over every image.
 - Label conceptual mockups when they could be mistaken for shipped work.
-- Avoid generic stock imagery, arbitrary 3D objects, and decorative code with no connection to the subject.
+- Use the actual logo as the monument. A finished interactive 3D scene requires faithful geometry, materials, and lighting; a flat reference plate is an interim art-direction treatment, not a finished 3D model.
 
 ## Icons and interface details
 
@@ -108,4 +110,4 @@ Carousels follow a clear sequence: opening idea, supporting evidence or steps, t
 
 ## Decisions still needed
 
-Approve or revise the palette, fonts, and editorial direction. Then define final wordmark artwork, small-size variants, export specifications, and asset links. Once approved, update this document's status; keep visual rules here as the single source of truth.
+Supply final logo artwork and define small-size variants. Replace illustrative portfolio/product content, finalize pricing and contact delivery, and build the finished textured 3D scene from approved assets. Keep visual rules here as the source of truth.
