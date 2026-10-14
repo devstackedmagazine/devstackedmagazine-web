@@ -10,8 +10,8 @@
     "test": "node --test tests/*.test.js"
   },
   "dependencies": {
-    "@fontsource/archivo-black": "5.3.0",
-    "@fontsource/manrope": "5.3.0"
+    "@fontsource/onest": "5.3.1",
+    "three": "0.186.1"
   },
   "devDependencies": {
     "vite": "8.3.4"
