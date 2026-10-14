@@ -10,7 +10,7 @@ Use case: stylized-concept. Asset type: background plate for a cinematic agency 
 
 ## Other assets
 
-Concept project previews are native HTML/CSS compositions. Current logo uses the reference artwork on a plane. Gateway geometry and water reflections are rendered in Three.js; atmosphere is a CSS overlay. Fonts: Onest via Fontsource (OFL-1.1; license retained in the package).
+Concept project previews are native HTML/CSS compositions. Current logo geometry is hand-traced from the supplied reference and extruded in Three.js; atmosphere is a CSS overlay. Fonts: Onest via Fontsource (OFL-1.1; license retained in the package).
 
 ## Reference-based hero revision — 2026-10-14
 
@@ -26,12 +26,14 @@ Inter, IBM Plex Mono, Archivo Black, Manrope and invented SVG D marks were remov
 
 User rejected Archivo Black and selected clean, compact, bold type. Onest, self-hosted via Fontsource, is now the website's display and body family. The package declares OFL-1.1. Earlier typography notes are historical revisions.
 
-The to3D conversion never started. User requested another effect; the site now renders a native stone gateway without a converted model.
+The to3D conversion never started. User requested another effect; the site now renders a native extruded logo without a converted model.
 
 ## Basalt material — 2026-10-14
 
-File: `public/assets/basalt-texture.png`. Generated with the built-in imagegen tool without a reference image. Used as color and bump texture on real stone geometry.
+File: `public/assets/basalt-texture.png`. Generated with the built-in imagegen tool without a reference image. Used as color and bump texture on the extruded logo.
 
 Final prompt:
 
 Use case: product-mockup. Asset type: seamless tileable stone material texture for real-time WebGL rendering. Create a square, flat, front-facing surface scan of charcoal black volcanic basalt. Fine granular mineral grains, weathered hairline fissures, occasional tiny pits, a dense realistic natural stone texture. Dark graphite, black and cool grey only, no colored veins. Consistent even diffuse illumination across the entire surface, no cast shadows, no directional highlights, no reflections, no objects, no text, no borders. This is an albedo/bump texture tile: no perspective, no 3D scene composition, no landscape. Edges should tile seamlessly. Texture should read as premium dark sculptural stone at both macro and fine scale. Mid-dark grey detail that can be tinted darker in the renderer. Avoid broad swirling marble veins; basalt microtexture is the subject.
+
+The latest revision removes the stone gateway and podium. No GLB or final vector logo asset has been supplied; contours in src/logo-scene.js are a reference-based approximation with real 3D depth.
