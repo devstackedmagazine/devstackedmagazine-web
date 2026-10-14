@@ -11,3 +11,10 @@ export const serviceGroups = [
   { id: 'ai', title: 'AI & automation', short: 'Automate', description: 'Turn a useful idea into a practical workflow. Connect the tools, define the handoffs, and keep people in control where it matters.', items: ['AI calling agents', 'AI integrations', 'Workflow automation', 'Internal tools'], number: '03' },
 ];
 
+export const offers = [
+  { id: 'landing', name: 'Landing page', model: 'Project pricing', description: 'One focused page. One clear purpose.', items: ['Design & development', 'Responsive layouts', 'Inquiry or conversion flow', 'Launch handover'], note: 'Content, integrations, and delivery schedule agreed before work begins.' },
+  { id: 'website', name: 'Business website', model: 'Project pricing', description: 'A complete home for your business.', items: ['Multi-page website', 'Design direction', 'Content structure & CMS options', 'Responsive development & handover'], note: 'Page count, content responsibilities, hosting and maintenance scoped separately.' },
+  { id: 'system', name: 'Software & AI', model: 'Scoped engagement', description: 'Built around the way you work.', items: ['Discovery & workflow mapping', 'Product or system design', 'Development & integrations', 'Testing & rollout plan'], note: 'AI usage, third-party subscriptions and ongoing operation quoted separately.' },
+  { id: 'creative', name: 'Creative partnership', model: 'Project or monthly scope', description: 'A consistent creative presence.', items: ['Graphic design', 'Social media assets', 'Motion graphics', 'Agreed delivery & revision scope'], note: 'Deliverables and cadence defined together. Social management and ad spend are separate scope decisions.' },
+];
+
