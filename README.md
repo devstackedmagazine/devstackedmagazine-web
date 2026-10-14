@@ -18,9 +18,9 @@ Preview: http://127.0.0.1:5173. Build: `dist/`. Hosting must rewrite non-asset d
 
 ## Current visual revision
 
-The hero now renders the reference-traced logo as actual extruded Three.js geometry: a split stone crown, diagonal stroke, lower outline and lime inset. Scroll turns and slightly separates the pieces; smoothed pointer movement reveals depth. The gateway, floating slabs, rendered podium and water-reflection geometry have been removed. The landscape remains a raster plate. Final vector artwork should replace the hand-traced contours when supplied.
+The hero now renders the reference-traced logo as actual extruded Three.js geometry: a split stone crown, diagonal stroke, lower outline and lime inset. Scroll exposes the lime core, then assembles the crown and lower outline, and finishes on a complete mark. Three copy beats connect the movement to an idea becoming a working product. Scrolling backward reverses the sequence. Pointer movement adds a small tilt. The gateway, floating slabs, rendered podium and water-reflection geometry have been removed. The landscape remains a raster plate. Final vector artwork should replace the hand-traced contours when supplied.
 
-Lenis 1.3.26 smooths wheel/touch scrolling, anchors and back-to-top actions, following its [official integration guidance](https://github.com/darkroomengineering/lenis). Native View Transitions animate routes with a Web Animations fallback. Controls, menus, filters, FAQ expansion and brief states share easing. Manual/OS reduced motion disables smoothing and nonessential animation. WebGL/texture failures retain a static reference image.
+Lenis 1.3.26 smooths wheel scrolling, anchors and back-to-top actions; touch scrolling uses native inertia, following its [official integration guidance](https://github.com/darkroomengineering/lenis). Native View Transitions animate routes with a Web Animations fallback. Controls, menus, filters, FAQ expansion and brief states share easing. Manual/OS reduced motion disables smoothing and nonessential animation. WebGL/texture failures retain a static reference image.
 
 “Good ideas. Given form.” shows all four concepts in a horizontal reel. Desktop vertical scrolling moves a sticky project rail; mobile/reduced-motion views use native horizontal scrolling, with arrow and keyboard controls in both modes.
 
@@ -32,6 +32,7 @@ All agency page surfaces are dark; light areas inside illustrative project previ
 - `src/content.js`: illustrative projects, service groups, engagement offers, route resolution and brief validation.
 - `src/scene.js`: scroll, pointer, motion preferences and static fallback controller.
 - `src/logo-scene.js`: reference contours, real extruded logo geometry, materials, lighting and camera.
+- `src/logo-motion.js`: assembly choreography and drawing-resolution budget.
 - `src/motion.js`: Lenis lifecycle, reduced-motion preference and action easing.
 - `src/project-reel.js`: scroll-driven desktop rail and native horizontal fallback.
 - `src/style.css`: responsive layout, typography, dark surfaces, mock interfaces and reduced-motion treatment.
@@ -52,8 +53,14 @@ All agency page surfaces are dark; light areas inside illustrative project previ
 
 ## Verification
 
-Node tests cover deep links, unknown routes, brief validation, logo cutouts and finite extrusion geometry with thickness. Production build passes. Browser review checks live extruded-logo rendering, scroll rotation, 1440/390 CSS-pixel framing, desktop/mobile project rail, keyboard/arrow controls, animated navigation, filters, anchor links, browser back, reduced-motion control and scene disposal/recreation. No console warnings/errors observed. Prior functional QA covered project filters, back navigation, safe plain-text brief rendering, draft retention and .txt download; the corresponding form logic is unchanged.
+Node tests cover deep links, unknown routes, brief validation, logo cutouts, finite extrusion geometry, assembly endpoints, static mode and render-resolution limits. Production build passes. Browser review checks live extruded-logo rendering, core reveal/assembly/completion, 1440/390 CSS-pixel framing, desktop/mobile project rail, keyboard/arrow controls, animated navigation, filters, anchor links, browser back, reduced-motion control and scene disposal/recreation. No console warnings/errors observed. Prior functional QA covered project filters, back navigation, safe plain-text brief rendering, draft retention and .txt download; the corresponding form logic is unchanged.
 
 Motion can be reduced through the site control or OS preference. OS-level emulation is unavailable in this browser tooling. No analytics or runtime third-party requests are enabled.
 
-Three.js loads only on the homepage. Vite reports a large-chunk advisory for that module (approximately 145 KB gzipped). Target-device performance remains a launch check. The abandoned GLB conversion scaffolding has been removed.
+Three.js loads only on the homepage. Vite reports a large-chunk advisory for that module (approximately 143 KB gzipped). Target-device performance remains a launch check. The abandoned GLB conversion scaffolding has been removed.
+
+## 3D performance revision
+
+Previous controller rendered continuously while idle, throttled updates to roughly 30–40 fps, and eased scroll a second time after Lenis. Current controller requests frames only for scroll/pointer changes, stops after pointer easing settles, and suspends work offscreen or in a hidden tab. It uses the already-smoothed scroll position directly; no artificial frame cap or idle floating motion remains. Background brightness stays constant and atmosphere has no blend-mode pass.
+
+Drawing resolution is capped at 1.2 million pixels. Scene geometry uses 1,116 triangles (previously 2,588), with standard stone materials and no environment prefilter/clearcoat pass. At the 1440×900 browser check, drawing size dropped from 1713×1080 to 1379×869 (about 35% fewer pixels). DOM diagnostics on the scene mount expose submitted render count/state, active update rate and average CPU submission time; these are not GPU timing or a guaranteed presented-frame-rate measurement. Review on target devices remains appropriate.
