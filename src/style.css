@@ -125,3 +125,12 @@ input,textarea,select{transition:border-color .35s var(--ease),background-color 
 @media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 
 .product-feature-copy>.status-tag,.project-overview .status-tag,.brief-result>.status-tag{margin:18px 0}.price-offer .offer-model{margin:14px 0 20px}
+
+/* The logo story runs only in response to scrolling and pointer input. */
+.journey{height:210svh}
+.landscape-atmosphere{mix-blend-mode:normal}
+.journey-copy p,.portal-copy p{font-size:14px;line-height:1.6;color:#c5cdc0;letter-spacing:0;margin-top:22px;max-width:330px}
+.portal-copy{inset:auto;left:var(--pad);top:38%;display:block;max-width:43%;font-size:clamp(40px,4.5vw,70px);line-height:1.06;letter-spacing:-.045em}
+@media(max-width:700px){.journey{height:190svh}.journey-copy,.portal-copy{top:auto;bottom:155px;left:var(--pad);right:var(--pad);max-width:none}.journey-copy h2,.portal-copy{font-size:36px}.journey-copy p,.portal-copy p{font-size:12px;margin-top:17px}}
+.journey.motion-paused,.journey.scene-fallback{height:100svh}
+@media(prefers-reduced-motion:reduce){.journey{height:100svh}}
