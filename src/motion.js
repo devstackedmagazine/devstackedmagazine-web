@@ -10,8 +10,8 @@ export const motionLimited = () => preference.matches || manual;
 function configure() {
   scroller?.destroy();
   scroller = motionLimited() ? null : new Lenis({
-    autoRaf: true, lerp: .085, smoothWheel: true, syncTouch: true,
-    syncTouchLerp: .085, anchors: true, autoToggle: true,
+    autoRaf: true, lerp: .1, smoothWheel: true, syncTouch: false,
+    anchors: true, autoToggle: true,
     stopInertiaOnNavigate: true,
   });
   document.body.classList.toggle('motion-limited', motionLimited());
