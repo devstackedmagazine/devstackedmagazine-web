@@ -19,3 +19,7 @@ Brand: #F5F3EE paper, #171717 ink, #D7FF3F lime; self-host Inter, sparse IBM Ple
 
 ## Verification
 Production build; route and brief unit tests; browser checks of desktop, mobile, scroll sequence, navigation, pricing/service selection, contact validation, reduced motion and fallback. Commit meaningful milestones. Missing final logo, portfolio, SaaS names, amounts and contact delivery remain documented launch requirements.
+
+## Visual review revision
+
+User rejected white interiors, the rough monument and logo approximation, and Inter. User authorized selecting a more suitable font. Revised direction: dark interiors throughout, Archivo Black display headings, Manrope body. Remove improvised logo marks. Use reference-based raster art with restrained parallax as an interim visual; final interactive 3D remains unfinished pending clear logo artwork and faithful textured reconstruction. Do not represent raster parallax as completion of the agreed 3D journey.
