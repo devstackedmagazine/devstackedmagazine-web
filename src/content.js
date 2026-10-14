@@ -28,3 +28,13 @@ export function resolveRoute(pathname) {
   return project ? { page: '/project', project } : { page: '/404', project: null };
 }
 
+export function buildBrief(values) {
+  const name = String(values.name || '').trim();
+  const email = String(values.email || '').trim();
+  const details = String(values.details || '').trim();
+  if (!name || name.length > 120) throw new Error('Enter your name (up to 120 characters).');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) throw new Error('Enter a valid email address.');
+  if (details.length < 20 || details.length > 5000) throw new Error('Describe your project in 20–5,000 characters.');
+  const services = [...new Set((values.services || []).filter(service => serviceGroups.some(group => group.title === service)))];
+  return `Project brief — devstackedmagazine\n\nName: ${name}\nEmail: ${email}\nCompany: ${String(values.company || '').trim().slice(0,160) || 'Not specified'}\nServices: ${services.join(', ') || 'Let’s discuss'}\nTiming: ${String(values.timing || '').slice(0,120) || 'Flexible'}\n\nProject\n${details}\n`;
+}
