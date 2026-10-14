@@ -80,3 +80,23 @@ body.motion-limited *,body.motion-limited *:before,body.motion-limited *:after{a
 .mockup.afterhours h3{font-weight:800}
 @media(max-width:700px){.hero-shade{background:linear-gradient(180deg,#05100733,transparent 25%,transparent 40%,#101311e8 55%,#101311 70%)}}
 @media(max-width:380px){.page-intro h1{font-size:38px;letter-spacing:-.05em}.hero-copy h1{font-size:48px}}
+
+
+/* Shared easing, route choreography and native controls. */
+:root{--ease:cubic-bezier(.22,1,.36,1);interpolate-size:allow-keywords}
+header{view-transition-name:site-header}footer{view-transition-name:site-footer}
+::view-transition-old(root){animation:route-out 280ms var(--ease) both}
+::view-transition-new(root){animation:route-in 680ms var(--ease) both}
+::view-transition-old(site-header),::view-transition-new(site-header),::view-transition-old(site-footer),::view-transition-new(site-footer){animation:none}
+@keyframes route-out{to{opacity:0;transform:translateY(-22px)}}
+@keyframes route-in{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:translateY(0)}}
+a,button{transition:color .35s var(--ease),background-color .35s var(--ease),border-color .35s var(--ease),opacity .35s var(--ease),transform .55s var(--ease)}
+.button:hover,.contact-link:hover{transform:translateY(-2px)}
+.button:active,.contact-link:active{transform:translateY(0) scale(.98)}
+.arrow{transition:transform .55s var(--ease)}.arrow.left{transform:rotate(180deg)}
+.path-panel,.mockup,.view-project,.will-reveal{transition-timing-function:var(--ease)}
+input,textarea,select{transition:border-color .35s var(--ease),background-color .35s var(--ease),box-shadow .35s var(--ease)}
+.mobile-nav a{transition:color .3s var(--ease),padding-left .45s var(--ease)}.mobile-nav a:hover{padding-left:10px;color:var(--lime)}
+.faq-list details::details-content{block-size:0;opacity:0;overflow:clip;transition:block-size .45s var(--ease),opacity .35s var(--ease),content-visibility .45s;transition-behavior:allow-discrete}
+.faq-list details[open]::details-content{block-size:auto;opacity:1}.faq-list summary span{transition:transform .45s var(--ease)}.faq-list details[open] summary span{transform:rotate(45deg)}
+.hero-copy{top:30%}.section-heading{grid-template-columns:1.25fr 1fr}.page-intro{padding-top:175px}
