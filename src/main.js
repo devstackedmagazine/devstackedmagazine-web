@@ -45,7 +45,7 @@ function projectCard(project, index = 0) {
 function workGrid(items = projects) { return `<div class="work-grid">${items.map(projectCard).join('')}</div>`; }
 
 function closing(title = 'Have something<br>in mind?') {
-  return `<section class="closing"><div class="closing-glow"></div><div><p class="eyebrow">Good things start with a conversation.</p><h2>${title}</h2></div>${button('Let’s make it happen', '/contact', 'lime')}</section>`;
+  return `<section class="closing"><div class="closing-glow"></div><div><h2>${title}</h2></div>${button('Let’s make it happen', '/contact', 'lime')}</section>`;
 }
 
 function home() {
