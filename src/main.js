@@ -229,26 +229,54 @@ function setupInteractions() {
   }
 }
 
+function scrollToHash(hash, immediate = false) {
+  let id;
+  try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+  const target = document.getElementById(id);
+  if (target) smoothTo(target, { immediate, offset: -100 });
+}
+
+function changePage(update, offset = 0, hash = '') {
+  activeTransition?.skipTransition();
+  const change = () => { update(); smoothTo(offset, { immediate: true }); if (hash) scrollToHash(hash, true); };
+  if (motionLimited() || !document.startViewTransition) {
+    change();
+    if (!motionLimited()) animateAction(main, [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 620 });
+    return;
+  }
+  activeTransition = document.startViewTransition(change);
+  const transition = activeTransition;
+  transition.finished.catch(() => {}).finally(() => { if (activeTransition === transition) activeTransition = null; });
+}
+
 document.addEventListener('click', event => {
-  const link = event.target.closest('a[data-link]');
+  const link = event.target.closest('a');
   if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
   const url = new URL(link.href);
   if (url.origin !== location.origin) return;
+  if (url.pathname === location.pathname && url.search === location.search && url.hash) {
+    event.preventDefault();
+    history.replaceState({ ...history.state, scroll: scrollY }, '', url.pathname + url.search + url.hash);
+    scrollToHash(url.hash);
+    return;
+  }
+  if (!link.hasAttribute('data-link')) return;
   event.preventDefault();
   history.replaceState({ ...history.state, scroll: scrollY }, '');
-  history.pushState({ scroll: 0 }, '', url.pathname + url.search + url.hash);
-  scrollTo({ top: 0, behavior: 'instant' });
-  render({ focus: true });
+  changePage(() => {
+    history.pushState({ scroll: 0 }, '', url.pathname + url.search + url.hash);
+    render({ focus: true });
+  }, 0, url.hash);
 });
 
-window.addEventListener('popstate', () => {
-  render({ focus: true });
-  requestAnimationFrame(() => scrollTo({ top: history.state?.scroll || 0, behavior: 'instant' }));
-});
+history.scrollRestoration = 'manual';
+window.addEventListener('popstate', () => changePage(() => render({ focus: true }), history.state?.scroll || 0));
 window.addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 30), { passive: true });
 motionPreference.addEventListener('change', () => {
   const offset = scrollY;
   render();
-  requestAnimationFrame(() => scrollTo({ top: offset, behavior: 'instant' }));
+  requestAnimationFrame(() => smoothTo(offset, { immediate: true }));
 });
+window.addEventListener('studio-motion-change', () => { if (motionLimited()) activeTransition?.skipTransition(); });
 render();
+if (location.hash) requestAnimationFrame(() => scrollToHash(location.hash, true));
