@@ -1,5 +1,4 @@
-import { modelUrl } from './model-config.js';
-// Use the generated GLB when configured; keep the art plate while conversion is pending.
+// Real-time stone gateway with reference artwork; no image-conversion service.
 const clamp = v => Math.max(0, Math.min(1, v));
 const smooth = (a,b,v) => { const t=clamp((v-a)/(b-a)); return t*t*(3-2*t); };
 let prefersStaticView=false;
@@ -17,13 +16,24 @@ export function createScene(mount,journey,reducedMotion=false) {
   let paused=reducedMotion||prefersStaticView;
   let progress=0,target=0,pointerX=0,pointerY=0,frame=0,lastTime=0,disposed=false;
   let realModel=null;
-  if(modelUrl)import('./model-scene.js').then(module=>module.createModelScene(mount,modelUrl)).then(model=>{
+  function showStaticScene(error){
+    if(disposed)return;
+    console.warn('WebGL landscape unavailable; reference artwork remains visible.',error.message);
+    realModel?.dispose();realModel=null;
+    landscape.style.backgroundImage="url('/assets/stone-monument.png')";
+    mount.style.opacity='1';
+    journey.classList.remove('terrain-scene-active');
+    journey.classList.add('scene-fallback');
+    setPaused(true);toggle.disabled=true;
+    toggle.querySelector('.motion-label').textContent='Static view';
+  }
+  import('./terrain-scene.js').then(module=>module.createTerrainScene(mount,showStaticScene)).then(model=>{
     if(disposed){model.dispose();return;}
     realModel=model;
-    journey.classList.add('model-scene-active');
+    journey.classList.add('terrain-scene-active');
     landscape.style.backgroundImage="url('/assets/volcanic-valley.png')";
     draw(lastTime);
-  }).catch(error=>{if(!disposed)console.warn('3D model could not load; reference artwork remains visible.',error.message);});
+  }).catch(showStaticScene);
   function updateScroll(){ target=paused?0:clamp(-journey.getBoundingClientRect().top/Math.max(1,journey.offsetHeight-mount.clientHeight)); }
   function draw(time){
     const reveal=smooth(.2,.65,progress),enter=smooth(.6,.98,progress),opening=1-smooth(.05,.28,progress);
@@ -41,7 +51,7 @@ export function createScene(mount,journey,reducedMotion=false) {
     atmosphere.style.opacity=paused?.08:.08+reveal*.06;
     const stage=progress<.3?0:progress<.73?1:2;
     indicators.forEach(item=>item.classList.toggle('active',Number(item.dataset.stage)===stage));
-    realModel?.update({progress,x:pointerX,y:pointerY,paused});
+    realModel?.update({progress,x:pointerX,y:pointerY,paused,time});
   }
   function tick(time){
     if(disposed)return;
