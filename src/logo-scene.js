@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { logoPose, renderPixelRatio } from './logo-motion.js';
 
 // Traced from the supplied reference: split crown, diagonal stroke and inset.
 // Replace these contours with final vector artwork when supplied.
@@ -40,11 +40,6 @@ export function createLogoShapes() {
   return { crown, lower, inset };
 }
 
-const smooth = (a, b, value) => {
-  const t = Math.max(0, Math.min(1, (value - a) / (b - a)));
-  return t * t * (3 - 2 * t);
-};
-
 export async function createLogoScene(mount, onUnavailable) {
   const texture = await new THREE.TextureLoader().loadAsync('/assets/basalt-texture.png');
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -53,19 +48,12 @@ export async function createLogoScene(mount, onUnavailable) {
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); }
   catch (error) { texture.dispose(); throw error; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setClearColor(0, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(38, 1, .1, 100);
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const room = new RoomEnvironment();
-  const environment = pmrem.fromScene(room, .03);
-  scene.environment = environment.texture;
-  scene.environmentIntensity = .75;
-  room.dispose(); pmrem.dispose();
   scene.add(new THREE.HemisphereLight(0xf0f2e8, 0x242920, 1.4));
   const key = new THREE.DirectionalLight(0xfff9e8, 3.8);
   key.position.set(-4, 6, 8); scene.add(key);
@@ -74,9 +62,9 @@ export async function createLogoScene(mount, onUnavailable) {
   const glow = new THREE.PointLight(0xd7ff3f, 7, 8, 2);
   glow.position.set(-1.4, -.2, 1); scene.add(glow);
 
-  const face = new THREE.MeshPhysicalMaterial({
+  const face = new THREE.MeshStandardMaterial({
     color: 0xd9d6c7, map: texture, bumpMap: texture, bumpScale: .065,
-    roughness: .56, metalness: .12, clearcoat: .18,
+    roughness: .56, metalness: .08,
   });
   face.onBeforeCompile = shader => {
     shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `
@@ -99,7 +87,7 @@ export async function createLogoScene(mount, onUnavailable) {
   function extrude(shape, depth, material, bevel) {
     const geometry = new THREE.ExtrudeGeometry(shape, {
       depth, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel,
-      bevelSegments: 4, curveSegments: 36, steps: 1,
+      bevelSegments: 2, curveSegments: 24, steps: 1,
     });
     geometry.translate(0, 0, -depth / 2);
     geometries.push(geometry);
@@ -113,31 +101,42 @@ export async function createLogoScene(mount, onUnavailable) {
   inset.position.z = -.26;
   mount.append(renderer.domElement);
   let disposed = false, mobile = false;
-  let lastState = { progress: 0, x: 0, y: 0, paused: true, time: 0 };
+  let lastState = { progress: 0, x: 0, y: 0, paused: true };
   const lookAt = new THREE.Vector3();
+  let sampleStart = performance.now(), sampleFrames = 0, sampleCost = 0, previousRender = 0;
 
   function update(state) {
     if (disposed) return;
     lastState = state;
-    const { progress, x, y, paused, time = 0 } = state;
-    const turn = smooth(.06, .9, progress);
-    const seconds = paused ? 0 : time * .001;
-    // A restrained turn keeps the actual shape legible while exposing depth.
-    logo.rotation.set(paused ? -.04 : -.04 + y * .12 + turn * .1,
-      paused ? -.24 : -.24 + x * .28 + turn * 1.3,
-      paused ? .015 : .015 - turn * .12);
-    logo.position.set(mobile ? 0 : .95 + turn * 1.7,
-      (mobile ? 1.55 : .35) + (paused ? 0 : Math.sin(seconds * .6) * .045), 0);
-    const separation = smooth(.22, .75, progress) * .16;
-    crown.position.y = separation;
-    lower.position.y = -separation * .4;
-    inset.position.z = -.26 + separation * .7;
-    camera.position.set(paused ? 0 : x * .22, mobile ? 0 : .25, mobile ? 12.3 : 10.7 - turn * .5);
+    const { progress, x, y, paused } = state;
+    const pose = logoPose(progress, paused);
+    logo.rotation.set(-.04 + (paused ? 0 : y * .07), -.24 + (paused ? 0 : x * .14) + pose.resolve * .15, .015);
+    logo.position.set(mobile ? 0 : .95 + pose.open * .65, mobile ? 1.55 - pose.open * .25 : .35, 0);
+    logo.scale.setScalar(pose.scale);
+    crown.position.set(...pose.crown);
+    lower.position.set(...pose.lower);
+    crown.rotation.set(pose.open * -.12, pose.open * -.24, pose.open * -.08);
+    lower.rotation.set(pose.open * .12, pose.open * .2, pose.open * .07);
+    inset.position.z = pose.coreZ;
+    glow.intensity = 7 + pose.open * 4;
+    camera.position.set(paused ? 0 : x * .12, mobile ? 0 : .25, mobile ? 12.3 + pose.open * 1.25 : 10.7);
     lookAt.set(0, 0, 0); camera.lookAt(lookAt);
-    mount.style.opacity = 1 - smooth(.83, 1, progress);
+    mount.style.opacity = pose.opacity;
+    const started = performance.now();
+    if (started - previousRender > 200) { sampleStart = started; sampleFrames = sampleCost = 0; }
+    previousRender = started;
     renderer.render(scene, camera);
+    sampleCost += performance.now() - started;
+    sampleFrames++;
+    if (performance.now() - sampleStart >= 1000) {
+      mount.dataset.renderRate = String(Math.round(sampleFrames * 1000 / (performance.now() - sampleStart)));
+      mount.dataset.renderMs = (sampleCost / sampleFrames).toFixed(2);
+      mount.dataset.renderCount = String(renderer.info.render.frame);
+      sampleStart = performance.now(); sampleFrames = sampleCost = 0;
+    }
     mount.dataset.progress = progress.toFixed(3);
     mount.dataset.triangles = String(renderer.info.render.triangles);
+    if (mount.dataset.renderState !== 'active') mount.dataset.renderState = 'active';
   }
   function resize() {
     const width = mount.clientWidth, height = mount.clientHeight;
@@ -145,7 +144,13 @@ export async function createLogoScene(mount, onUnavailable) {
     camera.aspect = width / Math.max(1, height);
     camera.fov = mobile ? 42 : 38;
     camera.updateProjectionMatrix();
+    renderer.setPixelRatio(renderPixelRatio(width, height, devicePixelRatio));
     renderer.setSize(width, height, false); update(lastState);
+    settled();
+  }
+  function settled() {
+    mount.dataset.renderState = 'idle';
+    mount.dataset.renderCount = String(renderer.info.render.frame);
   }
   const observer = new ResizeObserver(resize);
   observer.observe(mount); resize();
@@ -158,15 +163,16 @@ export async function createLogoScene(mount, onUnavailable) {
   renderer.domElement.addEventListener('webglcontextlost', contextLost);
   return {
     update,
+    settled,
     dispose() {
       if (disposed) return;
       disposed = true; observer.disconnect();
       renderer.domElement.removeEventListener('webglcontextlost', contextLost);
       geometries.forEach(geometry => geometry.dispose());
       [face, edge, lime, limeEdge].forEach(material => material.dispose());
-      texture.dispose(); environment.dispose();
+      texture.dispose();
       renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove();
-      for (const key of ['renderer', 'scene', 'progress', 'triangles']) delete mount.dataset[key];
+      for (const key of ['renderer', 'scene', 'progress', 'triangles', 'renderRate', 'renderMs', 'renderCount', 'renderState']) delete mount.dataset[key];
     },
   };
 }
