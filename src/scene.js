@@ -1,4 +1,5 @@
-// Real-time stone gateway with reference artwork; no image-conversion service.
+import { smoothTo, setMotionLimited } from './motion.js';
+// Scroll and pointer controller for the reference-traced extruded logo.
 const clamp = v => Math.max(0, Math.min(1, v));
 const smooth = (a,b,v) => { const t=clamp((v-a)/(b-a)); return t*t*(3-2*t); };
 let prefersStaticView=false;
@@ -14,7 +15,7 @@ export function createScene(mount,journey,reducedMotion=false) {
   atmosphere.className='landscape-atmosphere';
   mount.append(atmosphere);
   let paused=reducedMotion||prefersStaticView;
-  let progress=0,target=0,pointerX=0,pointerY=0,frame=0,lastTime=0,disposed=false;
+  let progress=0,target=0,pointerX=0,pointerY=0,targetX=0,targetY=0,frame=0,lastTime=0,disposed=false;
   let realModel=null;
   function showStaticScene(error){
     if(disposed)return;
@@ -22,15 +23,15 @@ export function createScene(mount,journey,reducedMotion=false) {
     realModel?.dispose();realModel=null;
     landscape.style.backgroundImage="url('/assets/stone-monument.png')";
     mount.style.opacity='1';
-    journey.classList.remove('terrain-scene-active');
+    journey.classList.remove('logo-scene-active');
     journey.classList.add('scene-fallback');
     setPaused(true);toggle.disabled=true;
     toggle.querySelector('.motion-label').textContent='Static view';
   }
-  import('./terrain-scene.js').then(module=>module.createTerrainScene(mount,showStaticScene)).then(model=>{
+  import('./logo-scene.js').then(module=>module.createLogoScene(mount,showStaticScene)).then(model=>{
     if(disposed){model.dispose();return;}
     realModel=model;
-    journey.classList.add('terrain-scene-active');
+    journey.classList.add('logo-scene-active');
     landscape.style.backgroundImage="url('/assets/volcanic-valley.png')";
     draw(lastTime);
   }).catch(showStaticScene);
@@ -57,21 +58,23 @@ export function createScene(mount,journey,reducedMotion=false) {
     if(disposed)return;
     frame=requestAnimationFrame(tick);
     if(paused||document.hidden||journey.getBoundingClientRect().bottom<0||time-lastTime<24)return;
-    progress+=(target-progress)*(1-Math.exp(-Math.min(time-lastTime,80)/110));
+    const easing=1-Math.exp(-Math.min(time-lastTime,80)/110);
+    progress+=(target-progress)*easing;
+    pointerX+=(targetX-pointerX)*easing;pointerY+=(targetY-pointerY)*easing;
     lastTime=time;draw(time);
   }
   function setPaused(value,returnToTop=false){
     const top=journey.getBoundingClientRect().top+scrollY;
     paused=value;if(!reducedMotion)prefersStaticView=value;
-    journey.classList.toggle('motion-paused',value);document.body.classList.toggle('motion-limited',value);
+    journey.classList.toggle('motion-paused',value);setMotionLimited(value&&!reducedMotion);
     toggle.setAttribute('aria-pressed',String(value));
     toggle.querySelector('.motion-label').textContent=reducedMotion?'Reduced motion':value?'Enable motion':'Reduce motion';
     toggle.querySelector('.motion-icon').textContent=value?'▷':'Ⅱ';toggle.disabled=reducedMotion;
-    if(value&&scrollY>top)scrollTo({top,behavior:'instant'});
+    if(value&&scrollY>top)smoothTo(top,{immediate:true});
     progress=0;updateScroll();draw(lastTime);
-    if(returnToTop)requestAnimationFrame(()=>{if(disposed)return;scrollTo({top,behavior:'instant'});progress=target=0;draw(lastTime);});
+    if(returnToTop)requestAnimationFrame(()=>{if(disposed)return;smoothTo(top,{immediate:true});progress=target=0;draw(lastTime);});
   }
-  function pointer(event){pointerX=event.clientX/innerWidth-.5;pointerY=event.clientY/innerHeight-.5;}
+  function pointer(event){targetX=event.clientX/innerWidth-.5;targetY=event.clientY/innerHeight-.5;}
   const onToggle=()=>setPaused(!paused,true),onResize=()=>{updateScroll();draw(lastTime);};
   window.addEventListener('scroll',updateScroll,{passive:true});
   window.addEventListener('pointermove',pointer,{passive:true});
