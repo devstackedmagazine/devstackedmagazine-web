@@ -19,9 +19,9 @@ Deep links and back/forward restore routes; narrow layouts do not overflow; redu
 
 ## Tasks
 - [x] Foundation: package scripts, generated landscape, routing/content helpers; test valid and unknown routes plus brief validation.
-- [x] Experience: scene.js owns scroll/motion/fallback; terrain-scene.js owns WebGL geometry/camera/water and disposal; main.js owns accessible navigation and all pages; style.css owns responsive compositions.
+- [x] Experience: scene.js owns scroll/motion/fallback; logo-scene.js owns extruded logo/materials/camera and disposal; motion.js owns Lenis; project-reel.js owns horizontal showcase; main.js owns accessible navigation and all pages; style.css owns responsive compositions.
 - [x] Verify: unit tests and production build pass; desktop/mobile/scroll/menu/forms/static-mode browser checks completed. OS motion emulation and forced WebGL loss unavailable, documented in README. Local preview opened; source ready for commit.
 
 ## Review revision
 
-The initial implementation is retained in commit 478ac1c. Current revision uses dark surfaces and Onest. After the abandoned to3D workflow, user requested another effect: a native textured WebGL stone gateway with lime seams, floating fragments, reflections and scroll-driven camera movement. The reference logo stays artwork on a plane pending final clear assets. Browser review verifies desktop/mobile rendering, scroll stages, motion toggle and navigation disposal/recreation; no console warnings/errors observed.
+Current revision uses dark surfaces and Onest. User requested Lenis and smoother actions/page changes, removed heading labels/dots, rejected the podium, and requested the logo itself in 3D. Native extruded reference tracing replaces gateway geometry. Horizontal project reel replaces the home work grid. Reduced motion disables Lenis, animation and rail pinning. Final vector artwork remains a launch asset. Verification covers geometry topology/thickness, routes, briefs, desktop/mobile rendering, scroll rotation, rail controls, navigation, filters, anchors, browser back and motion toggle.
