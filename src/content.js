@@ -5,3 +5,9 @@ export const projects = [
   { slug: 'relay', name: 'Relay', type: 'AI system concept', category: 'Software', className: 'relay', title: 'A clearer view of every conversation.', description: 'An illustrative interface exploring call activity, summaries and human handoff for an AI calling workflow. This is a concept preview, not a claim of a deployed system.', scope: ['System design', 'AI workflow concept', 'Human handoff'], kind: 'ai' },
 ];
 
+export const serviceGroups = [
+  { id: 'build', title: 'Websites & software', short: 'Build', description: 'From a single landing page to the system your business runs on. Clear interfaces, thoughtful structure, and software built around the job it needs to do.', items: ['Landing pages', 'Business websites', 'Custom systems', 'SaaS development'], number: '01' },
+  { id: 'design', title: 'Brand & content', short: 'Design', description: 'Give your business a visual language worth remembering. Then carry it consistently across screens, social feeds, and motion.', items: ['Graphic design', 'Social media creative', 'Motion graphics', 'Visual identity'], number: '02' },
+  { id: 'ai', title: 'AI & automation', short: 'Automate', description: 'Turn a useful idea into a practical workflow. Connect the tools, define the handoffs, and keep people in control where it matters.', items: ['AI calling agents', 'AI integrations', 'Workflow automation', 'Internal tools'], number: '03' },
+];
+
