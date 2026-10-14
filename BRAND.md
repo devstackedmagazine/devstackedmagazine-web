@@ -1,6 +1,6 @@
 # devstackedmagazine — visual brand guide
 
-Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, clean compact bold typography. User chose this type direction after rejecting Archivo Black. Native extruded logo, Lenis smoothing, page transitions and a horizontal project reel. Heading labels and dots removed.
+Status: Working website direction, revised after visual review. Dark volcanic terrain, lime light, clean compact bold typography. User chose this type direction after rejecting Archivo Black. Native extruded logo with a core-reveal/assembly story, Lenis smoothing, page transitions and a horizontal project reel. Heading labels and dots removed.
 
 ## Direction
 
@@ -88,7 +88,7 @@ Use motion to explain hierarchy, navigation, or state changes.
 
 - Interface transitions: usually 150–250 ms with gentle easing.
 - Prefer opacity and small position changes; keep reading content stable.
-- Marketing motion can be more expressive when it serves the story.
+- Marketing motion can be more expressive when it serves the story. Logo sequence: expose the lime core, assemble the stone pieces, resolve into a complete mark. Keep it reversible and render only when input changes.
 - Respect reduced-motion preferences. Provide a static alternative to nonessential movement.
 - Avoid constant bouncing, scroll hijacking, and effects that delay access to content.
 
