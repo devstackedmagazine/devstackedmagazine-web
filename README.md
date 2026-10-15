@@ -18,7 +18,7 @@ Preview: http://127.0.0.1:5173. Build: `dist/`. Hosting must rewrite non-asset d
 
 ## Current visual revision
 
-The hero now renders the reference-traced logo as actual extruded Three.js geometry: a split stone crown, diagonal stroke, lower outline and lime inset. Scroll exposes the lime core, then assembles the crown and lower outline, and finishes on a complete mark. Three copy beats connect the movement to an idea becoming a working product. Scrolling backward reverses the sequence. Pointer movement adds a small tilt. The gateway, floating slabs, rendered podium and water-reflection geometry have been removed. The landscape remains a raster plate. Final vector artwork should replace the hand-traced contours when supplied.
+The hero renders the reference-traced logo as actual extruded Three.js geometry: a split stone crown, diagonal stroke, lower outline and lime inset. Scroll exposes the lime core, then spreads the stone pieces more than twice as far before fading out. The camera pulls back to frame the wider separation. Scrolling backward reverses the sequence. Pointer movement adds a small tilt. The landscape remains a raster plate. Final vector artwork should replace the hand-traced contours when supplied.
 
 Lenis 1.3.26 smooths wheel scrolling, anchors and back-to-top actions; touch scrolling uses native inertia, following its [official integration guidance](https://github.com/darkroomengineering/lenis). Native View Transitions animate routes with a Web Animations fallback. Controls, menus, filters, FAQ expansion and brief states share easing. Manual/OS reduced motion disables smoothing and nonessential animation. WebGL/texture failures retain a static reference image.
 
@@ -32,7 +32,7 @@ All agency page surfaces are dark; light areas inside illustrative project previ
 - `src/content.js`: illustrative projects, service groups, engagement offers, route resolution and brief validation.
 - `src/scene.js`: scroll, pointer, motion preferences and static fallback controller.
 - `src/logo-scene.js`: reference contours, real extruded logo geometry, materials, lighting and camera.
-- `src/logo-motion.js`: assembly choreography and drawing-resolution budget.
+- `src/logo-motion.js`: deconstruction choreography and drawing-resolution budget.
 - `src/motion.js`: Lenis lifecycle, reduced-motion preference and action easing.
 - `src/project-reel.js`: scroll-driven desktop rail and native horizontal fallback.
 - `src/style.css`: responsive layout, typography, dark surfaces, mock interfaces and reduced-motion treatment.
@@ -60,6 +60,8 @@ Motion can be reduced through the site control or OS preference. OS-level emulat
 Three.js loads only on the homepage. Vite reports a large-chunk advisory for that module (approximately 143 KB gzipped). Target-device performance remains a launch check. The abandoned GLB conversion scaffolding has been removed.
 
 ## 3D performance revision
+
+Hover and focus states share easing in both directions. Buttons, header contact, filters and reel controls use a circular fill; the project orbit turns smoothly back on exit. Reduced motion disables these transitions. Logo motion tests sample the full forward scroll to prevent reassembly; static mode retains the complete mark.
 
 Previous controller rendered continuously while idle, throttled updates to roughly 30–40 fps, and eased scroll a second time after Lenis. Current controller requests frames only for scroll/pointer changes, stops after pointer easing settles, and suspends work offscreen or in a hidden tab. It uses the already-smoothed scroll position directly; no artificial frame cap or idle floating motion remains. Background brightness stays constant and atmosphere has no blend-mode pass.
 
