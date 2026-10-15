@@ -90,11 +90,25 @@ header{view-transition-name:site-header}footer{view-transition-name:site-footer}
 ::view-transition-old(site-header),::view-transition-new(site-header),::view-transition-old(site-footer),::view-transition-new(site-footer){animation:none}
 @keyframes route-out{to{opacity:0;transform:translateY(-22px)}}
 @keyframes route-in{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:translateY(0)}}
-a,button{transition:color .35s var(--ease),background-color .35s var(--ease),border-color .35s var(--ease),opacity .35s var(--ease),transform .55s var(--ease)}
-.button:hover,.contact-link:hover{transform:translateY(-2px)}
+a,button,.button,.service-row{transition:color .35s var(--ease),background-color .35s var(--ease),border-color .35s var(--ease),opacity .35s var(--ease),transform .55s var(--ease),padding .45s var(--ease)}
+.button,.contact-link,.filter,.reel-controls button{position:relative;isolation:isolate;overflow:hidden;--button-fill:var(--lime)}
+.button.lime{--button-fill:var(--paper)}
+.button::before,.contact-link::before,.filter::before,.reel-controls button::before{content:'';position:absolute;z-index:-1;left:50%;top:50%;width:150%;aspect-ratio:1;border-radius:50%;background:var(--button-fill);transform:translate(-50%,-50%) scale(0);transition:transform .65s var(--ease);pointer-events:none}
+:is(.button,.contact-link,.filter,.reel-controls button):is(:hover,:focus-visible):not(:disabled)::before{transform:translate(-50%,-50%) scale(1)}
+:is(.button,.contact-link,.filter,.reel-controls button):is(:hover,:focus-visible):not(:disabled){color:var(--ink);border-color:var(--button-fill)}
+.button.lime:hover{background:var(--lime)}.button.ink:hover{background:var(--paper)}.button.outline:hover,.filter:hover{background:transparent}
+.button:is(:hover,:focus-visible),.contact-link:is(:hover,:focus-visible){transform:translateY(-2px)}
 .button:active,.contact-link:active{transform:translateY(0) scale(.98)}
 .arrow{transition:transform .55s var(--ease)}.arrow.left{transform:rotate(180deg)}
-.path-panel,.mockup,.view-project,.will-reveal{transition-timing-function:var(--ease)}
+.path-panel,.path-panel:before,.mockup,.view-project,.will-reveal,.stone-stack i,.product-monolith>span,.menu-toggle span,.journey-tracker span{transition-timing-function:var(--ease)}
+.service-choice span{transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease)}
+.service-choice:hover span{border-color:var(--lime)}
+.project-card:hover .afterhours-orbit{animation:none;transform:rotate(25deg)}.afterhours-orbit{transition:transform 1.2s var(--ease)}
+.text-link:is(:hover,:focus-visible),.hero-explore:is(:hover,:focus-visible),.back-top:is(:hover,:focus-visible),.motion-toggle:is(:hover,:focus-visible){color:var(--lime)}
+.text-link:is(:hover,:focus-visible) .arrow,.button:focus-visible .arrow,.contact-link:focus-visible .arrow,.service-row:is(:hover,:focus-visible)>.arrow{transform:translateX(4px)}
+.hero-explore:is(:hover,:focus-visible) .arrow{transform:rotate(90deg) translateX(4px)}.back-top:is(:hover,:focus-visible)>.arrow{transform:rotate(-90deg) translateX(4px)}
+.path-panel:focus-visible{border-color:#d7ff3f70}.path-panel:focus-visible:before{opacity:.7}.project-card:focus-visible .mockup{transform:scale(1.025) translateY(-4px)}
+.service-row:focus-visible{padding-left:12px;padding-right:12px}
 input,textarea,select{transition:border-color .35s var(--ease),background-color .35s var(--ease),box-shadow .35s var(--ease)}
 .mobile-nav a{transition:color .3s var(--ease),padding-left .45s var(--ease)}.mobile-nav a:hover{padding-left:10px;color:var(--lime)}
 .faq-list details::details-content{block-size:0;opacity:0;overflow:clip;transition:block-size .45s var(--ease),opacity .35s var(--ease),content-visibility .45s;transition-behavior:allow-discrete}
@@ -120,7 +134,7 @@ input,textarea,select{transition:border-color .35s var(--ease),background-color 
 .reel-progress{height:1px;flex:1;background:var(--rule);overflow:hidden}
 .reel-progress span{height:100%;width:100%;display:block;background:var(--lime);transform-origin:left;transform:scaleX(var(--reel-progress,0))}
 .reel-controls{display:flex;gap:10px}.reel-controls button{display:grid;place-items:center;width:46px;height:46px;border:1px solid #ffffff35;background:transparent}
-.reel-controls button:hover{border-color:var(--lime);color:var(--lime)}.reel-controls button:disabled{opacity:.25;transform:none}
+.reel-controls button:is(:hover,:focus-visible):not(:disabled){border-color:var(--lime);color:var(--ink)}.reel-controls button:disabled{opacity:.25;transform:none}
 @media(max-width:700px){.hero-copy{top:auto}.project-reel-sticky{padding-top:65px;padding-bottom:65px}.project-reel .section-top{gap:20px}.project-reel .project-card{width:82vw}.project-reel .project-visual{height:300px;aspect-ratio:auto;padding:20px}.project-reel .mockup{aspect-ratio:1.05}.project-reel .section-top h2{font-size:40px}.reel-footer{gap:15px}.project-reel .project-meta h3{font-size:23px}.page-intro{padding-top:135px}}
 @media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 
