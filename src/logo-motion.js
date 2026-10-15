@@ -3,17 +3,18 @@ const smooth = (start, end, value) => {
   return t * t * (3 - 2 * t);
 };
 
-// A reversible scroll story: reveal the core, assemble, then carry forward.
+// Reveal the core, then keep separating the pieces as the story unfolds.
 export function logoPose(progress, paused = false) {
   const p = paused ? 0 : Math.max(0, Math.min(1, progress));
-  const open = smooth(.04, .3, p) * (1 - smooth(.36, .7, p));
-  const resolve = smooth(.68, .92, p);
+  const resolve = smooth(.36, .92, p);
+  const reveal = smooth(.04, .3, p);
+  const open = reveal + resolve * 1.15;
   return {
     open, resolve,
     crown: [-.48 * open, .72 * open, -.3 * open],
     lower: [.42 * open, -.62 * open, -.18 * open],
-    coreZ: -.26 + open * 1.85,
-    scale: 1 - open * .1 + resolve * .1,
+    coreZ: -.26 + reveal * 1.85 + resolve * .65,
+    scale: 1 - reveal * .1 - resolve * .03,
     opacity: 1 - smooth(.94, 1, p),
   };
 }

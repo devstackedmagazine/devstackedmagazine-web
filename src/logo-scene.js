@@ -119,7 +119,7 @@ export async function createLogoScene(mount, onUnavailable) {
     lower.rotation.set(pose.open * .12, pose.open * .2, pose.open * .07);
     inset.position.z = pose.coreZ;
     glow.intensity = 7 + pose.open * 4;
-    camera.position.set(paused ? 0 : x * .12, mobile ? 0 : .25, mobile ? 12.3 + pose.open * 1.25 : 10.7);
+    camera.position.set(paused ? 0 : x * .12, mobile ? 0 : .25, mobile ? 12.3 + pose.open * 1.25 : 10.7 + pose.resolve * 3.2);
     lookAt.set(0, 0, 0); camera.lookAt(lookAt);
     mount.style.opacity = pose.opacity;
     const started = performance.now();
